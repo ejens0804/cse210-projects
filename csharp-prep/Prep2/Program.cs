@@ -4,41 +4,37 @@ class Program
 {
     static void Main(string[] args)
     {
-        // Console.WriteLine("Hello Prep2 World!");
         Console.Write("What is your current grade percentage?");
-        string userGradeInput = Console.ReadLine();
+        string userGradeInput = Console.ReadLine                   ();
         int grade = int.Parse(userGradeInput);
-        string letterGrade = null;
+        string letterGrade = "";
 
         if (grade >= 90)
         {
             letterGrade = "A";
-            Console.WriteLine($"Your grade of {grade} is an {letterGrade}.");
         }
 
-        else if (grade >= 80 && grade < 90)
+        else if (grade >= 80)
         {
             letterGrade = "B";
-            Console.WriteLine($"Your grade of {grade} is a {letterGrade}.");
         }
 
-        else if (grade >= 70 && grade < 80)
+        else if (grade >= 70)
         {
             letterGrade = "C";
-            Console.WriteLine($"Your grade of {grade} is a {letterGrade}.");
         }
 
-        else if (grade >= 60 && grade < 70)
+        else if (grade >= 60)
         {
             letterGrade = "D";
-            Console.WriteLine($"Your grade of {grade} is a {letterGrade}.");
         }
 
         else if (grade < 60)
         {
             letterGrade = "F";
-            Console.WriteLine($"Your grade of {grade} is an {letterGrade}.");
         }
+
+        Console.WriteLine($"Your grade is: {letterGrade}");
 
         if (grade >= 70)
         {
@@ -49,6 +45,46 @@ class Program
         {
             Console.WriteLine("You do not have a passing grade.");
         }
-        Console.WriteLine($"Your Letter grade is {letterGrade}.");
+
+
+
+        // Sample Solution
+        // Console.Write("What is your grade percentage? ");
+        // string answer = Console.ReadLine();
+        // int percent = int.Parse(answer);
+
+        // string letter = "";
+
+        // if (percent >= 90)
+        // {
+        //     letter = "A";
+        // }
+        // else if (percent >= 80)
+        // {
+        //     letter = "B";
+        // }
+        // else if (percent >= 70)
+        // {
+        //     letter = "C";
+        // }
+        // else if (percent >= 60)
+        // {
+        //     letter = "D";
+        // }
+        // else
+        // {
+        //     letter = "F";
+        // }
+
+        // Console.WriteLine($"Your grade is: {letter}");
+        
+        // if (percent >= 70)
+        // {
+        //     Console.WriteLine("You passed!");
+        // }
+        // else
+        // {
+        //     Console.WriteLine("Better luck next time!");
+        // }
     }
 }
