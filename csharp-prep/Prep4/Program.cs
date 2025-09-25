@@ -15,7 +15,7 @@ class Program
             Console.Write("Enter number: ");
             int numberToAdd = int.Parse(Console.ReadLine());
             keepRunning =  numberToAdd;
-            if (numberToAdd != 0)
+            if (numberToAdd != 0) //only add the number if it isn't 0 to avoid adding 0 and messing up the average
             { 
                 numberList.Add(numberToAdd);
             }
