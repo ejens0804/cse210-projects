@@ -11,7 +11,7 @@ public class Menu
         foreach (string menuOptions in _menuItem)
         {
             Console.WriteLine(menuOptions);
-        }
+        }   
     }
 
     public string GetUserMenuChoice()
