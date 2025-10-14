@@ -25,7 +25,7 @@ class Program
             menu1.DisplayMenu();
             menuOptionUserSelected = menu1.GetUserMenuChoice();
 
-            while (menuOptionUserSelected != "1" || menuOptionUserSelected != "2" || menuOptionUserSelected != "3" || menuOptionUserSelected != "4" || menuOptionUserSelected != "5" || menuOptionUserSelected != "6")
+            while (menuOptionUserSelected != "1" && menuOptionUserSelected != "2" && menuOptionUserSelected != "3" && menuOptionUserSelected != "4" && menuOptionUserSelected != "5" && menuOptionUserSelected != "6")
             {
                 Console.WriteLine("Input Invalid. Please try again");
                 menuOptionUserSelected = menu1.GetUserMenuChoice();
