@@ -37,7 +37,7 @@ public class Reference
     {
         foreach (int number in Enumerable.Range(_verseStart, _verseEnd))
         {
-            Console.
+            Console.WriteLine(number);
         }
     }
 }
