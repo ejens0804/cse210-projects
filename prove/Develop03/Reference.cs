@@ -33,15 +33,11 @@ public class Reference
         }
     }
 
-    public void SplitVerseNumbers()
+    public void IterateThroughVerseStartAndVerseEnd(int _verseStart, int _verseEnd)
     {
-        // write a function that splits the numbers for multiple verses
-    }
-
-    private void ConvertVersesToIntAndListNumbersInBetween()
-    {
-        // write a function to convert string verse numbers to int and then iterate through
-        // the verses so that all of the numbers are printed alongside the verses when I display the scripture
-
+        foreach (int number in Enumerable.Range(_verseStart, _verseEnd))
+        {
+            Console.
+        }
     }
 }
