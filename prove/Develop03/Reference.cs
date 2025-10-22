@@ -33,11 +33,13 @@ public class Reference
         }
     }
 
-    public void IterateThroughVerseStartAndVerseEnd(int _verseStart, int _verseEnd)
+    public List<int> IterateThroughVerseRange()
     {
+        List<int> numbersInVerseRange = new List<int>();
         foreach (int number in Enumerable.Range(_verseStart, _verseEnd))
         {
-            Console.WriteLine(number);
+            numbersInVerseRange.Add(number);
         }
+        return numbersInVerseRange;
     }
 }

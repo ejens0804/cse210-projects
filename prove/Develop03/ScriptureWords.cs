@@ -1,7 +1,23 @@
 public class ScriptureWords
 {
-    private string _scriptureWordsString;
-    private List<string> _scriptureWordsList = new List<string>();
+    // private string _scriptureWordsString;
+    private Dictionary<string, int> _scriptureVerseWordsDict = new Dictionary<string, int>();
+    private List<string> _scriptureIndividualWordsList = new List<string>();
+
+    public ScriptureWords()
+    {
+        
+    }
+
+
+
+
+
+
+
+
+
+
 
     public ScriptureWords()
     {
@@ -10,7 +26,7 @@ public class ScriptureWords
 
     public ScriptureWords(string scriptureWords)
     {
-        
+        _scriptureWordsString = scriptureWords;
     }
 
 
@@ -18,12 +34,24 @@ public class ScriptureWords
     {
         return _scriptureWordsList;
     }
-    
+
     public void DisplayWordsInScripture()
     {
         Console.WriteLine(_scriptureWordsString);
     }
 
+    public void AddWordsToScripture()
+    {
 
+    }
+
+    public void AddNumbersToVerses(List<int> verseNumbers)
+    {
+        foreach (int number in verseNumbers)
+        {
+            
+        }
+
+    }
 
 }

@@ -17,11 +17,18 @@ class Program
 
         // create a list or dictionary to seperate multiple verses
         // figure out how to accept multiple verses and print them properly
-        
-        
+
+
         // ScriptureWords sw = new ScriptureWords();
         // sw.DisplayWordsInScripture();
 
+        // Reference ref1 = new Reference("Alma", "12", 1, 5);
+        // ref1.IterateThroughVerseRange();
+
+        Reference ref1 = new Reference();
+        ScriptureWords scripWords1 = new ScriptureWords();
+        scripWords1.AddNumbersToVerses(ref1.IterateThroughVerseRange());
+        
         
     }
 }
