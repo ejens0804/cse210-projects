@@ -27,6 +27,17 @@ class Program
 
         Reference ref1 = new Reference();
         ScriptureWords scripWords1 = new ScriptureWords();
+
+        WordHider wh = new WordHider(scripWords1.CombineScriptureDictionaryWords());
+
+
+
+        
+
+        // write code to accept number of verses to add
+        // and then run a loop that asks for verses to add
+
+
         scripWords1.AddNumbersToVerses(ref1.IterateThroughVerseRange());
         
         

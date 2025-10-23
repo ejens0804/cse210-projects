@@ -11,6 +11,8 @@ public class ScriptureUserMenu
     
     public void RunUserChoice()
     {
-        
+        // write a for each loop using a number from the user
+        // to determine how many times to run the add scripture to scripture
+        // words dictionary
     }
 }
