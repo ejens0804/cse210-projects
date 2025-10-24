@@ -23,6 +23,7 @@ public class Reference
 
     public void DisplayReference()
     {
+        Console.Clear();
         if (_verseEnd != 0)
         {
             Console.WriteLine($"\n{_book} {_chapterOrSection}:{_verseStart}-{_verseEnd}");
@@ -35,11 +36,20 @@ public class Reference
 
     public List<int> IterateThroughVerseRange()
     {
-        List<int> numbersInVerseRange = new List<int>();
-        foreach (int number in Enumerable.Range(_verseStart, _verseEnd))
+        if (_verseEnd != 0)
         {
-            numbersInVerseRange.Add(number);
+            List<int> numbersInVerseRange = new List<int>();
+            foreach (int number in Enumerable.Range(_verseStart, _verseEnd))
+            {
+                numbersInVerseRange.Add(number);
+            }
+            return numbersInVerseRange;
         }
-        return numbersInVerseRange;
+        else
+        {
+            List<int> numbersInVerseRange = new List<int>();
+            numbersInVerseRange.Add(_verseStart);
+            return numbersInVerseRange;
+        }
     }
 }

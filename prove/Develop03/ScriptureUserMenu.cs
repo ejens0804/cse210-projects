@@ -51,17 +51,21 @@ public class ScriptureUserMenu
 
     public void PreloadedKeepRunningUntilNoMoreWords()
     {
-
+        
         ScriptureWords scripWords1 = new ScriptureWords();
         WordHider wh = new WordHider();
+        Reference ref1 = new Reference();
         List<string> individualWordList = scripWords1.CombineScriptureDictionaryWords();
         while (_keepRunningChoice != "quit")
         {
+            
             Console.WriteLine($"\bPress enter to hide words or type 'quit' to exit the program:");
             _keepRunningChoice = Console.ReadLine();
             _keepRunningChoice = _keepRunningChoice.ToLower();
             if (_keepRunningChoice == "")
             {
+                // Console.Clear();
+                ref1.DisplayReference();
                 List<string> wordsToHide = wh.PickWordsToHide(individualWordList);
                 scripWords1.DisplayRemainingWordsInScripture(wordsToHide);
                 // remove the hidden words from the available word list
@@ -88,13 +92,18 @@ public class ScriptureUserMenu
         Console.Write("\bPlease type the Starting verse number: ");
         int verseStart = int.Parse(Console.ReadLine());
 
-        Console.Write("\bPlease type the Ending verse number (type 0 if your range of verses is 1 verse): ");
+        Console.Write("\bPlease type the Ending verse number (type 0 if you only have 1 verse): ");
         int verseEnd = int.Parse(Console.ReadLine());
 
         Reference ref1 = new Reference(book, chapter, verseStart, verseEnd);
-
         int verseQuantity = (verseEnd - verseStart) + 1;
+        if (verseEnd == 0)
+        {
+            verseQuantity = 1;
+        }
+        
         ScriptureWords sw = new ScriptureWords(verseQuantity);
+        
         ref1.DisplayReference();
 
         sw.DisplayAllWordsInUserScripture(book, chapter, verseStart, verseEnd);
@@ -103,12 +112,15 @@ public class ScriptureUserMenu
         List<string> individualWordList = sw.CombineScriptureDictionaryWords();
         while (_keepRunningChoice != "quit")
         {
+            
             Console.WriteLine($"\bPress enter to hide words or type 'quit' to exit the program:");
             _keepRunningChoice = Console.ReadLine();
             _keepRunningChoice = _keepRunningChoice.ToLower();
             if (_keepRunningChoice == "")
             {
+                // Console.Clear();
                 List<string> wordsToHide = wh.PickWordsToHide(individualWordList);
+                ref1.DisplayReference();
                 sw.DisplayRemainingWordsInUserScripture(wordsToHide, book, chapter, verseStart, verseEnd);
                 // remove the hidden words from the available word list
                 foreach (string word in wordsToHide)
@@ -119,6 +131,7 @@ public class ScriptureUserMenu
                 {
                     Console.WriteLine("\b\bAll words are hidden\b\b");
                     Environment.Exit(0);
+
                 }
             }
         }
