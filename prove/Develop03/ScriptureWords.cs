@@ -1,9 +1,12 @@
+using System.Text.RegularExpressions;
+
 public class ScriptureWords
 {
 
+    private Dictionary<int, string> _originalScriptureVerseWordsDict;
     private Dictionary<int, string> _scriptureVerseWordsDict = new Dictionary<int, string>();
     private List<string> _scriptureIndividualWordsList = new List<string>();
-
+    private List<string> _hiddenWords = new List<string>();
 
     public ScriptureWords()
     {
@@ -22,20 +25,29 @@ public class ScriptureWords
         }
     }
 
-    private void CombineScriptureDictionaryWords(Dictionary<int, string> _scriptureVerseWordsDict, bool toLower = true, bool distinct = false)
+    public List<string> CombineScriptureDictionaryWords()
     {
+        _scriptureIndividualWordsList.Clear();
+
         foreach (var val in _scriptureVerseWordsDict.Values)
         {
-            if (val == null) _scriptureIndividualWordsList.Add(string.Empty);
-            else _scriptureIndividualWordsList.Add(val.ToLowerInvariant());
+            if (string.IsNullOrEmpty(val))
+            {
+                continue;
+            }
+            var words = val.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            foreach (var word in words)
+            {
+                string cleanWord = Regex.Replace(word, @"[^\w]", "").ToLowerInvariant();
+                if (!string.IsNullOrEmpty(cleanWord))
+                {
+                    _scriptureIndividualWordsList.Add(cleanWord);
+                }
+            }
         }
-    }
-
-    public List<string> SendIndividualWordList()
-    {   
-        CombineScriptureDictionaryWords()
         return _scriptureIndividualWordsList;
     }
+
 
     private void AddNumbersToVerses()
     {
@@ -44,27 +56,70 @@ public class ScriptureWords
 
         verseNumbers = ref1.IterateThroughVerseRange();
         int verseNumbersCount = 0;
-
-        foreach (KeyValuePair<int, string> dictLine in _scriptureVerseWordsDict)
+        var keysToUpdate = new List<(int oldKey, int newKey, string value)>();
+        foreach (var dictLine in _scriptureVerseWordsDict)
         {
             int oldKey = dictLine.Key;
             string value = dictLine.Value;
-            int newKey;
-            newKey = verseNumbers[verseNumbersCount];
+            int newKey = verseNumbers[verseNumbersCount];
             verseNumbersCount += 1;
+            keysToUpdate.Add((oldKey, newKey, value));
+        }
+
+        foreach (var (oldKey, newKey, value) in keysToUpdate)
+        {
             _scriptureVerseWordsDict.Remove(oldKey);
             _scriptureVerseWordsDict[newKey] = value;
         }
-
     }
-    
-    public void DisplayWordsInScripture()
+
+    public void DisplayAllWordsInScripture()
     {
         AddNumbersToVerses();
         foreach (KeyValuePair<int, string> dictLine in _scriptureVerseWordsDict)
         {
             Console.WriteLine($"{dictLine.Key} {dictLine.Value}");
-        }    
+        }
+    }
+
+    public void DisplayRemainingWordsInScripture(List<string> wordsToHide)
+    {
+        _originalScriptureVerseWordsDict = _scriptureVerseWordsDict;
+        _hiddenWords.AddRange(wordsToHide);
+
+        foreach (var key in _originalScriptureVerseWordsDict.Keys)
+        {
+            string original = _originalScriptureVerseWordsDict[key];
+
+            foreach (string word in _hiddenWords)
+            {
+                // string pattern = $@"\b{Regex.Escape(word.Trim())}(?=\W|\b)";
+                string pattern = $@"\b{Regex.Escape(word)}\b";
+                string hiddenWord = new string('_', word.Length);
+                original = Regex.Replace(original, pattern, hiddenWord, RegexOptions.IgnoreCase);
+            }
+
+            _scriptureVerseWordsDict[key] = original;
+        }
+        AddNumbersToVerses();
+        foreach (KeyValuePair<int, string> dictLine in _scriptureVerseWordsDict)
+        {
+            Console.WriteLine($"{dictLine.Key} {dictLine.Value}");
+        }
+    }
+
+    public bool CheckIfAllWordsAreHidden()
+    {
+        foreach (var dictLine in _scriptureVerseWordsDict)
+        {
+            string value = dictLine.Value;
+
+            if (value.Any(c => char.IsLetterOrDigit(c) && c != '_'))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

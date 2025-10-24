@@ -25,11 +25,11 @@ public class Reference
     {
         if (_verseEnd != 0)
         {
-            Console.WriteLine($"{_book} {_chapterOrSection}:{_verseStart}-{_verseEnd}");
+            Console.WriteLine($"\n{_book} {_chapterOrSection}:{_verseStart}-{_verseEnd}");
         }
         else
         {
-            Console.WriteLine($"{_book} {_chapterOrSection}:{_verseStart}");
+            Console.WriteLine($"\n{_book} {_chapterOrSection}:{_verseStart}");
         }
     }
 

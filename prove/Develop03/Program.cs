@@ -19,27 +19,21 @@ class Program
         // figure out how to accept multiple verses and print them properly
 
 
-        // ScriptureWords sw = new ScriptureWords();
-        // sw.DisplayWordsInScripture();
 
-        // Reference ref1 = new Reference("Alma", "12", 1, 5);
-        // ref1.IterateThroughVerseRange();
-
-        Reference ref1 = new Reference();
-        ScriptureWords scripWords1 = new ScriptureWords();
-
-        WordHider wh = new WordHider(scripWords1.CombineScriptureDictionaryWords());
+        // launch initial menu
+        ScriptureUserMenu mainMenu = new ScriptureUserMenu();
+        mainMenu.RunUserChoice();
+        mainMenu.KeepRunningUntilNoMoreWords();
 
 
 
-        
+
+
+
 
         // write code to accept number of verses to add
         // and then run a loop that asks for verses to add
 
 
-        scripWords1.AddNumbersToVerses(ref1.IterateThroughVerseRange());
-        
-        
     }
 }
