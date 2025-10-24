@@ -15,15 +15,14 @@ class Program
         // be used in the random words to hide list
 
 
-        // create a list or dictionary to seperate multiple verses
-        // figure out how to accept multiple verses and print them properly
-
-
 
         // launch initial menu
         ScriptureUserMenu mainMenu = new ScriptureUserMenu();
-        mainMenu.RunUserChoice();
-        mainMenu.KeepRunningUntilNoMoreWords();
+        int whichScriptureOptionToUse = mainMenu.RunUserChoice();
+        if (whichScriptureOptionToUse == 1)
+        {
+            mainMenu.PreloadedKeepRunningUntilNoMoreWords();
+        }
 
 
 

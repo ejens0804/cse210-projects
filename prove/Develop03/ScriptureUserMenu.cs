@@ -21,7 +21,7 @@ public class ScriptureUserMenu
         _userChoice = Console.ReadLine();
         }
 
-    public void RunUserChoice()
+    public int RunUserChoice()
     {
         // write a for each loop using a number from the user
         // to determine how many times to run the add scripture to scripture
@@ -33,46 +33,95 @@ public class ScriptureUserMenu
                 ref1.DisplayReference();
                 ScriptureWords scripWords = new ScriptureWords();
                 scripWords.DisplayAllWordsInScripture();
-                break;
+                return 1;
 
             case "2": // user input scripture
-                
-                break;
+                RunUserInputScripture();
+                return 2;
 
             case "3": // exit program
                 Environment.Exit(0);
                 break;
+                
+
         }
+        return 0;
+        
     }
 
-    public void KeepRunningUntilNoMoreWords()
+    public void PreloadedKeepRunningUntilNoMoreWords()
     {
+
         ScriptureWords scripWords1 = new ScriptureWords();
         WordHider wh = new WordHider();
         List<string> individualWordList = scripWords1.CombineScriptureDictionaryWords();
-
         while (_keepRunningChoice != "quit")
         {
-            Console.WriteLine($"Press enter to hide words or type 'quit' to exit the program:");
+            Console.WriteLine($"\bPress enter to hide words or type 'quit' to exit the program:");
             _keepRunningChoice = Console.ReadLine();
             _keepRunningChoice = _keepRunningChoice.ToLower();
-
             if (_keepRunningChoice == "")
             {
                 List<string> wordsToHide = wh.PickWordsToHide(individualWordList);
                 scripWords1.DisplayRemainingWordsInScripture(wordsToHide);
-
                 // remove the hidden words from the available word list
                 foreach (string word in wordsToHide)
                 {
                     individualWordList.Remove(word);
                 }
-
                 if (scripWords1.CheckIfAllWordsAreHidden() == true)
                 {
                     Environment.Exit(0);
                 }
             }
         }
+    }
+    
+    private void RunUserInputScripture()
+    {
+        Console.Write("Please type the Book for your scripture reference: ");
+        string book = Console.ReadLine();
+
+        Console.Write("\bPlease type the Chapter/Section: ");
+        string chapter = Console.ReadLine();
+
+        Console.Write("\bPlease type the Starting verse number: ");
+        int verseStart = int.Parse(Console.ReadLine());
+
+        Console.Write("\bPlease type the Ending verse number (type 0 if your range of verses is 1 verse): ");
+        int verseEnd = int.Parse(Console.ReadLine());
+
+        Reference ref1 = new Reference(book, chapter, verseStart, verseEnd);
+
+        int verseQuantity = (verseEnd - verseStart) + 1;
+        ScriptureWords sw = new ScriptureWords(verseQuantity);
+        ref1.DisplayReference();
+
+        sw.DisplayAllWordsInUserScripture(book, chapter, verseStart, verseEnd);
+
+        WordHider wh = new WordHider();
+        List<string> individualWordList = sw.CombineScriptureDictionaryWords();
+        while (_keepRunningChoice != "quit")
+        {
+            Console.WriteLine($"\bPress enter to hide words or type 'quit' to exit the program:");
+            _keepRunningChoice = Console.ReadLine();
+            _keepRunningChoice = _keepRunningChoice.ToLower();
+            if (_keepRunningChoice == "")
+            {
+                List<string> wordsToHide = wh.PickWordsToHide(individualWordList);
+                sw.DisplayRemainingWordsInUserScripture(wordsToHide, book, chapter, verseStart, verseEnd);
+                // remove the hidden words from the available word list
+                foreach (string word in wordsToHide)
+                {
+                    individualWordList.Remove(word);
+                }
+                if (sw.CheckIfAllWordsAreHidden() == true)
+                {
+                    Console.WriteLine("\b\bAll words are hidden\b\b");
+                    Environment.Exit(0);
+                }
+            }
+        }
+
     }
 }

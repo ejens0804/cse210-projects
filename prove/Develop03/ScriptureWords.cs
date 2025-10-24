@@ -24,7 +24,7 @@ public class ScriptureWords
             _scriptureVerseWordsDict.Add(number, scriptureWords);
         }
     }
-
+    
     public List<string> CombineScriptureDictionaryWords()
     {
         _scriptureIndividualWordsList.Clear();
@@ -73,9 +73,42 @@ public class ScriptureWords
         }
     }
 
+    private void AddNumbersToVerses(string book, string chapter, int verseStart, int verseEnd)
+    {
+        List<int> verseNumbers;
+        Reference ref1 = new Reference(book, chapter, verseStart, verseEnd);
+
+        verseNumbers = ref1.IterateThroughVerseRange();
+        int verseNumbersCount = 0;
+        var keysToUpdate = new List<(int oldKey, int newKey, string value)>();
+        foreach (var dictLine in _scriptureVerseWordsDict)
+        {
+            int oldKey = dictLine.Key;
+            string value = dictLine.Value;
+            int newKey = verseNumbers[verseNumbersCount];
+            verseNumbersCount += 1;
+            keysToUpdate.Add((oldKey, newKey, value));
+        }
+
+        foreach (var (oldKey, newKey, value) in keysToUpdate)
+        {
+            _scriptureVerseWordsDict.Remove(oldKey);
+            _scriptureVerseWordsDict[newKey] = value;
+        }
+    }
+
     public void DisplayAllWordsInScripture()
     {
         AddNumbersToVerses();
+        foreach (KeyValuePair<int, string> dictLine in _scriptureVerseWordsDict)
+        {
+            Console.WriteLine($"{dictLine.Key} {dictLine.Value}");
+        }
+    }
+
+    public void DisplayAllWordsInUserScripture(string book, string chapter, int verseStart, int verseEnd)
+    {
+        AddNumbersToVerses(book, chapter, verseStart, verseEnd);
         foreach (KeyValuePair<int, string> dictLine in _scriptureVerseWordsDict)
         {
             Console.WriteLine($"{dictLine.Key} {dictLine.Value}");
@@ -102,6 +135,31 @@ public class ScriptureWords
             _scriptureVerseWordsDict[key] = original;
         }
         AddNumbersToVerses();
+        foreach (KeyValuePair<int, string> dictLine in _scriptureVerseWordsDict)
+        {
+            Console.WriteLine($"{dictLine.Key} {dictLine.Value}");
+        }
+    }
+
+    public void DisplayRemainingWordsInUserScripture(List<string> wordsToHide, string book, string chapter, int verseStart, int verseEnd)
+    {
+        _originalScriptureVerseWordsDict = _scriptureVerseWordsDict;
+        _hiddenWords.AddRange(wordsToHide);
+
+        foreach (var key in _originalScriptureVerseWordsDict.Keys)
+        {
+            string original = _originalScriptureVerseWordsDict[key];
+
+            foreach (string word in _hiddenWords)
+            {
+                string pattern = $@"\b{Regex.Escape(word)}\b";
+                string hiddenWord = new string('_', word.Length);
+                original = Regex.Replace(original, pattern, hiddenWord, RegexOptions.IgnoreCase);
+            }
+
+            _scriptureVerseWordsDict[key] = original;
+        }
+        AddNumbersToVerses(book, chapter, verseStart, verseEnd);
         foreach (KeyValuePair<int, string> dictLine in _scriptureVerseWordsDict)
         {
             Console.WriteLine($"{dictLine.Key} {dictLine.Value}");
