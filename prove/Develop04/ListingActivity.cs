@@ -6,7 +6,7 @@ public class ListingActivity
 
     public ListingActivity()
     {
-
+        // set variables here and don't hard code them directly
     }
 
     public void DisplayActivityDescription()

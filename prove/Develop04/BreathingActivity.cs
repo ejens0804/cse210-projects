@@ -6,7 +6,7 @@ public class BreathingActivity
 
     public BreathingActivity()
     {
-
+        // set variables here and don't hard code them directly
     }
 
     public void DisplayActivityDescription()

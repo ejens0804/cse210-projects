@@ -4,7 +4,7 @@ public class Activity
 
     public Activity()
     { 
-
+        // set menu options
     }
 
     public void DisplayMenu()

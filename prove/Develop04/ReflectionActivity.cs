@@ -6,7 +6,7 @@ public class ReflectionActivity
 
     public ReflectionActivity()
     {
-
+        // set variables here and don't hard code them directly
     }
 
     public void DisplayActivityDescription()
