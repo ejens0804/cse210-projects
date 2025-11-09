@@ -44,26 +44,28 @@ public class Activity
         }
     }
 
-    public void Animation()
+public void Animation(int durationInSeconds)
+{
+    Console.CursorVisible = false;
+
+    char[] spinnerFrames = { '|', '/', '-', '\\' };
+    int frameDelay = 100; // milliseconds between frames
+    int totalFrames = (durationInSeconds * 1000) / frameDelay;
+
+    for (int i = 0; i < totalFrames; i++)
     {
-        // figure out how to remove the cursor when it's waiting and running the animation
-        Console.CursorVisible = false;
-
-        for (int i = 0; i <= 1; i++)
-        {
-            Console.Write("|");
-            Thread.Sleep(1250);
-            Console.Write("\b/\b");
-            Thread.Sleep(1250);
-            Console.Write("\b-\b");
-            Thread.Sleep(1250);
-            Console.Write("\b\\\b");
-            Thread.Sleep(1250);
-
-        }
-        Console.Write("\b \b");
-        Console.CursorVisible = true;
+        Console.Write(spinnerFrames[i % spinnerFrames.Length]);
+        Thread.Sleep(frameDelay);
+        Console.Write("\b");
     }
+
+    Console.Write(" "); // clear spinner
+    Console.Write("\b"); // move back again
+    Console.CursorVisible = true;
+}
+
+
+
 
     public void GoodbyeMessage()
     {

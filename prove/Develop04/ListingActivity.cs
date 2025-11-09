@@ -1,8 +1,8 @@
 public class ListingActivity : Activity
 {
     private string _activityDescription;
-    private List<string> _promptList;
-    private List<string> _userList;
+    private List<string> _promptList = new List<string>();
+    private List<string> _userList = new List<string>();
 
     public ListingActivity()
     {

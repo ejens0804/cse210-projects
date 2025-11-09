@@ -19,6 +19,7 @@ public class BreathingActivity : Activity
 
     public void RunBreathingActivity()
     {
+        Console.CursorVisible = false;
         Console.Clear();
         base.WelcomeMessage("1");
 
@@ -26,7 +27,7 @@ public class BreathingActivity : Activity
 
         int countdown = base.SetCountdown();
         Console.WriteLine("Get ready...");
-        base.Animation();
+        base.Animation(5);
 
         while (countdown > 0)
         {
@@ -53,7 +54,8 @@ public class BreathingActivity : Activity
         }
         base.GoodbyeMessage();
         Console.WriteLine($"You have completed another {base.GetCountdown()} seconds of the Breathing Activity.");
-        base.Animation();
+        base.Animation(5);
         Console.Clear();
+        Console.CursorVisible = true;
     }
 }
