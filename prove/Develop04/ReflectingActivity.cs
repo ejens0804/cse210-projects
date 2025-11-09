@@ -71,6 +71,10 @@ public class ReflectingActivity : Activity
             countdown = countdown - 10;
         }
         base.GoodbyeMessage();
+        base.Animation(5);
+        Console.WriteLine($"You have completed another {base.GetCountdown()} seconds of the Reflecting Activity.");
+        base.Animation(5);
+        Console.Clear();
     }
 
 

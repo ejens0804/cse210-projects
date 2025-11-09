@@ -64,9 +64,6 @@ public void Animation(int durationInSeconds)
     Console.CursorVisible = true;
 }
 
-
-
-
     public void GoodbyeMessage()
     {
         Console.WriteLine("\nWell done!!\n");
@@ -89,15 +86,16 @@ public void Animation(int durationInSeconds)
             else if (_userActivityChoiceNumber == "2")
             {
                 reflect.RunReflectingActivity();
-                _userActivityChoiceNumber = "";
+                _userActivityChoiceNumber = ""; // reset user choice
             }
 
             else if (_userActivityChoiceNumber == "3")
             {
-
+                list.RunListingActivity();
+                _userActivityChoiceNumber = ""; // reset user choice
             }
-            break;
         }
+        Environment.Exit(0);
     }
 
     public int SetCountdown()
