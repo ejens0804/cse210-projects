@@ -12,7 +12,7 @@ public class BreathingActivity : Activity
         _breatheOutPrompt = "Breathe out... ";
     }
 
-    public void DisplayActivityDescription()
+    private void DisplayActivityDescription()
     {
         Console.WriteLine($"\n{_activityDescription}");
     }

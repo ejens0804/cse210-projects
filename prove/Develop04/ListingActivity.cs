@@ -11,12 +11,12 @@ public class ListingActivity : Activity
         _promptList.AddRange(new List<string> {"Who are people that you appreciate?", "What are personal strengths of yours?", "Who are people that you have helped this week?", "When have you felt the Holy Ghost this month?", "Who are some of your personal heroes?"});
     }
 
-    public void DisplayActivityDescription()
+    private void DisplayActivityDescription()
     {
         Console.WriteLine($"\n{_activityDescription}");
     }
 
-    public string GetPromptFromList()
+    private string GetPromptFromList()
     {
         Random rand = new Random();
         int index = rand.Next(_promptList.Count);
@@ -24,12 +24,12 @@ public class ListingActivity : Activity
         return randomPrompt;
     }
 
-    public void AddUserItemToList(string userItem)
+    private void AddUserItemToList(string userItem)
     {
         _userList.Add(userItem);
     }
 
-    public int GetUserListCount()
+    private int GetUserListCount()
     {
         return _userList.Count;
     }

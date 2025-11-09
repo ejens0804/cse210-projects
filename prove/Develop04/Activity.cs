@@ -6,7 +6,7 @@ public class Activity
 
     public Activity()
     {
-        // set menu options
+        // Set menu options
         // Menu Options:
         // 1. Start breathing activity
         // 2. Start reflecting activity
@@ -16,7 +16,7 @@ public class Activity
         _menuOptions.AddRange(new List<string> { "1. Start breathing activity", "2. Start reflecting activity", "3. Start listing activity", "4. Quit" });
     }
 
-    public void DisplayMenu()
+    private void DisplayMenu()
     {
         Console.WriteLine("Menu Options:");
         foreach (string menuOption in _menuOptions)
@@ -28,7 +28,7 @@ public class Activity
         // write error handling to remove all extra characters except the number
     }
 
-    public void WelcomeMessage(string activityNumber)
+    protected void WelcomeMessage(string activityNumber)
     {
         switch (activityNumber)
         {
@@ -44,29 +44,41 @@ public class Activity
         }
     }
 
-public void Animation(int durationInSeconds)
-{
-    Console.CursorVisible = false;
-
-    char[] spinnerFrames = { '|', '/', '-', '\\' };
-    int frameDelay = 100; // milliseconds between frames
-    int totalFrames = (durationInSeconds * 1000) / frameDelay;
-
-    for (int i = 0; i < totalFrames; i++)
+    protected void Animation(int durationInSeconds)
     {
-        Console.Write(spinnerFrames[i % spinnerFrames.Length]);
-        Thread.Sleep(frameDelay);
-        Console.Write("\b");
+        Console.CursorVisible = false;
+
+        char[] spinnerFrames = { '|', '/', '-', '\\' };
+        int frameDelay = 100; // milliseconds between frames
+        int totalFrames = (durationInSeconds * 1000) / frameDelay;
+
+        for (int i = 0; i < totalFrames; i++)
+        {
+            Console.Write(spinnerFrames[i % spinnerFrames.Length]);
+            Thread.Sleep(frameDelay);
+            Console.Write("\b");
+        }
+
+        Console.Write(" "); // clear spinner
+        Console.Write("\b"); // move back again
+        Console.CursorVisible = true;
     }
 
-    Console.Write(" "); // clear spinner
-    Console.Write("\b"); // move back again
-    Console.CursorVisible = true;
-}
-
-    public void GoodbyeMessage()
+    protected void GoodbyeMessage()
     {
         Console.WriteLine("\nWell done!!\n");
+    }
+
+    protected int SetCountdown()
+    {
+        Console.Write("\nHow long, in seconds, would you like for your session? (Please use increments of 10): ");
+        _countdown = int.Parse(Console.ReadLine());
+        return _countdown;
+    }
+
+    protected int GetCountdown()
+    {
+        return _countdown;
     }
 
     public void RunActivity()
@@ -97,17 +109,4 @@ public void Animation(int durationInSeconds)
         }
         Environment.Exit(0);
     }
-
-    public int SetCountdown()
-    {
-        Console.Write("\nHow long, in seconds, would you like for your session? (Please use increments of 10): ");
-        _countdown = int.Parse(Console.ReadLine());
-        return _countdown;
-    }
-
-    public int GetCountdown()
-    {
-        return _countdown;
-    }
-
 }
