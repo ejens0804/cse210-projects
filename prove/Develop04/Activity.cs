@@ -1,34 +1,113 @@
 public class Activity
 {
-    private List<string> _menuOptions;
+    private List<string> _menuOptions = new List<string>();
+    private string _userActivityChoiceNumber;
+    private int _countdown;
 
     public Activity()
-    { 
+    {
         // set menu options
+        // Menu Options:
+        // 1. Start breathing activity
+        // 2. Start reflecting activity
+        // 3. Start listing activity
+        // 4. Quit
+        // Select a choice from the menu: (user input)
+        _menuOptions.AddRange(new List<string> { "1. Start breathing activity", "2. Start reflecting activity", "3. Start listing activity", "4. Quit" });
     }
 
     public void DisplayMenu()
     {
-
+        Console.WriteLine("Menu Options:");
+        foreach (string menuOption in _menuOptions)
+        {
+            Console.WriteLine(menuOption);
+        }
+        Console.Write("Select a numerical choice from the menu: ");
+        _userActivityChoiceNumber = Console.ReadLine();
+        // write error handling to remove all extra characters except the number
     }
 
-    public void WelcomeMessage()
+    public void WelcomeMessage(string activityNumber)
     {
-
+        switch (activityNumber)
+        {
+            case "1":
+                Console.WriteLine("Welcome to the Breathing Activity.");
+                break;
+            case "2":
+                Console.WriteLine("Welcome to the Reflecting Activity.");
+                break;
+            case "3":
+                Console.WriteLine("Welcome to the Listing Activity.");
+                break;
+        }
     }
 
     public void Animation()
     {
+        // figure out how to remove the cursor when it's waiting and running the animation
+        Console.CursorVisible = false;
 
+        for (int i = 0; i <= 1; i++)
+        {
+            Console.Write("|");
+            Thread.Sleep(1250);
+            Console.Write("\b/\b");
+            Thread.Sleep(1250);
+            Console.Write("\b-\b");
+            Thread.Sleep(1250);
+            Console.Write("\b\\\b");
+            Thread.Sleep(1250);
+
+        }
+        Console.Write("\b \b");
+        Console.CursorVisible = true;
     }
 
     public void GoodbyeMessage()
     {
-
+        Console.WriteLine("\nWell done!!\n");
     }
-    
+
     public void RunActivity()
     {
-        
+        BreathingActivity breathe = new BreathingActivity();
+        ReflectingActivity reflect = new ReflectingActivity();
+        ListingActivity list = new ListingActivity();
+        while (_userActivityChoiceNumber != "4")
+        {
+            DisplayMenu();
+            if (_userActivityChoiceNumber == "1")
+            {
+                breathe.RunBreathingActivity();
+                _userActivityChoiceNumber = ""; // reset user choice
+            }
+
+            else if (_userActivityChoiceNumber == "2")
+            {
+                reflect.RunReflectingActivity();
+                _userActivityChoiceNumber = "";
+            }
+
+            else if (_userActivityChoiceNumber == "3")
+            {
+
+            }
+            break;
+        }
     }
+
+    public int SetCountdown()
+    {
+        Console.Write("\nHow long, in seconds, would you like for your session? (Please use increments of 10): ");
+        _countdown = int.Parse(Console.ReadLine());
+        return _countdown;
+    }
+
+    public int GetCountdown()
+    {
+        return _countdown;
+    }
+
 }
