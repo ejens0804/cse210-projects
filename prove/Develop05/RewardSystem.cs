@@ -13,6 +13,28 @@ public class RewardSystem
     public RewardSystem()
     {
         _rewardDict = new Dictionary<int, KeyValuePair<string, int>>();
+        _levelNamesList.AddRange(new List<string>{
+            "Professional Procrastinator", 
+            "Master of 'I'll Start Tomorrow'", 
+            "Goal Observer",
+            "Task Avoidance Specialist", 
+            "Half-Finished Project Enthusiast", 
+            "Checklist Admirer",
+            "Goal Attempt Initiator", 
+            "Task Starter",
+            "Breaker of One Bad Habit (Maybe)", 
+            "To-Do List Wrangler", 
+            "Momentum Gainer", 
+            "Goal Finisher (Small Edition)",
+            "Habit Machine-in-Training", 
+            "Daily Goal Conqueror", 
+            "Productivity Wizard",
+            "Master of Momentum", 
+            "Legendary Goal Slayer", 
+            "Unstoppable Task Titan", 
+            "Reality-Reshaping Productivity Overlord", 
+            "The Final Achiever (Achieves ALL Goals)"
+        });
     }
     
     public void LoadRewards(List<KeyValuePair<string,int>> rewardList)
