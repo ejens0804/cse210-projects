@@ -7,7 +7,7 @@ public class RewardSystem
     private int _moolah;
     private Dictionary<int, KeyValuePair<string, int>> _rewardDict;
     private List<string> _levelNamesList;
-    private List<string> _purchasedItemsToUse;
+    // private List<string> _purchasedItemsToUse;
     
 
     public RewardSystem()
@@ -65,100 +65,16 @@ public class RewardSystem
         Console.WriteLine("Which reward would you like to buy?");
         int chosenReward = int.Parse(Console.ReadLine());
 
-        switch (chosenReward)
+        if (_moolah >= _rewardDict[chosenReward].Value)
         {
-            case 1 :
-                if (_moolah >= _rewardDict[1].Value)
-                {
-                    Console.WriteLine("Purchase Successful!");
-                    _moolah = _moolah - _rewardDict[1].Value;
-                }
-                else
-                {
-                    Console.WriteLine("Insufficent funds!");
-                    Console.WriteLine($"You need {_rewardDict[1].Value - _moolah} more Moolah to purchase this item.");
-                }
-                break;
-
-            case 2 :
-            if (_moolah >= _rewardDict[2].Value)
-                {
-                    Console.WriteLine("Purchase Successful!");
-                    _moolah = _moolah - _rewardDict[1].Value;
-                }
-                else
-                {
-                    Console.WriteLine("Insufficent funds!");
-                    Console.WriteLine($"You need {_rewardDict[2].Value - _moolah} more Moolah to purchase this item.");
-                }
-                break;
-
-            case 3 :
-            if (_moolah >= _rewardDict[3].Value)
-                {
-                    Console.WriteLine("Purchase Successful!");
-                    _moolah = _moolah - _rewardDict[1].Value;
-                }
-                else
-                {
-                    Console.WriteLine("Insufficent funds!");
-                    Console.WriteLine($"You need {_rewardDict[3].Value - _moolah} more Moolah to purchase this item.");
-                }
-                break;
-
-            case 4 :
-            if (_moolah >= _rewardDict[4].Value)
-                {
-                    Console.WriteLine("Purchase Successful!");
-                    _moolah = _moolah - _rewardDict[1].Value;
-                }
-                else
-                {
-                    Console.WriteLine("Insufficent funds!");
-                    Console.WriteLine($"You need {_rewardDict[4].Value - _moolah} more Moolah to purchase this item.");
-                }
-                break;
-
-            case 5 :
-            if (_moolah >= _rewardDict[5].Value)
-                {
-                    Console.WriteLine("Purchase Successful!");
-                    _moolah = _moolah - _rewardDict[1].Value;
-                }
-                else
-                {
-                    Console.WriteLine("Insufficent funds!");
-                    Console.WriteLine($"You need {_rewardDict[5].Value - _moolah} more Moolah to purchase this item.");
-                }
-                break;
-
-            case 6 :
-            if (_moolah >= _rewardDict[6].Value)
-                {
-                    Console.WriteLine("Purchase Successful!");
-                    _moolah = _moolah - _rewardDict[1].Value;
-                }
-                else
-                {
-                    Console.WriteLine("Insufficent funds!");
-                    Console.WriteLine($"You need {_rewardDict[6].Value - _moolah} more Moolah to purchase this item.");
-                }
-                break;
-
-            case 7 :
-            if (_moolah >= _rewardDict[7].Value)
-                {
-                    Console.WriteLine("Purchase Successful!");
-                    _moolah = _moolah - _rewardDict[1].Value;
-                }
-                else
-                {
-                    Console.WriteLine("Insufficent funds!");
-                    Console.WriteLine($"You need {_rewardDict[7].Value - _moolah} more Moolah to purchase this item.");
-                }
-                break;
+            Console.WriteLine("Purchase Successful!");
+            _moolah = _moolah - _rewardDict[chosenReward].Value;
         }
-        
+        else
+        {
+            Console.WriteLine("Insufficent funds!");
+            Console.WriteLine($"You need {_rewardDict[chosenReward].Value - _moolah} more Moolah to purchase this item.");
+        }
     }
 
     public int GetMoolahBalance()
@@ -178,11 +94,21 @@ public class RewardSystem
 
     public void SetMoolahBalance(int quantity)
     {
-        
+        _moolah = _moolah + quantity;
     }
 
     public void SetLevelName()
     {
-        
+        int levelListIndex;
+
+        if (_xpTotal > 0)
+        {
+            levelListIndex = (_xpTotal/100) - 1;
+        }
+        else
+        {
+            levelListIndex = 0;
+        }
+        _currentLevel = _levelNamesList[levelListIndex];
     }
 }

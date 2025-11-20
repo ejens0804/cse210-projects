@@ -31,7 +31,7 @@ public class Menu
 
     public void RunMenuOption()
     {
-        
+        // instantiate the goals here so they can be added to the list
     }
 
     public void DisplayPointsAndMoolah()
@@ -42,5 +42,10 @@ public class Menu
     public void AddTrackedGoalToList()
     {
         
+    }
+
+    public void DisplayTrackedGoalList()
+    {
+        // put the code for running the child classes display goal method here when I'm iterating through the list
     }
 }

@@ -7,8 +7,13 @@ public class SimpleGoal : BaseGoal
 
     public override void DisplayGoal()
     {
-        
+        base.GetCompletionPointValue();
+        base.GetCompletionStatus();
+        base.GetDescription();
+        base.GetTitle();
     }
+
+    
 
     public override void RecordPoints()
     {
