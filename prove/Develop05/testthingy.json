@@ -1,0 +1,35 @@
+{
+  "_xp": 325,
+  "_moolah": 0,
+  "_goals": [
+    {
+      "$type": "SimpleGoal, Develop05",
+      "_goalType": 1,
+      "_goalTitle": "Eat a Hamburger",
+      "_goalDescription": "Eat a TASTY Hamburger",
+      "_completionPointValue": 50,
+      "_completionStatus": true
+    },
+    {
+      "$type": "EternalGoal, Develop05",
+      "_quantityCompleted": 4,
+      "_goalType": 2,
+      "_goalTitle": "Go to the Temple",
+      "_goalDescription": "Attend the Temple on a weekly basis",
+      "_completionPointValue": 50,
+      "_completionStatus": false
+    },
+    {
+      "$type": "ChecklistGoal, Develop05",
+      "_requiredTimesToComplete": 5,
+      "_completionQuantity": 3,
+      "_goalProgressPointValue": 25,
+      "_goalType": 3,
+      "_goalTitle": "Go Running",
+      "_goalDescription": "Go running 5 times this week",
+      "_completionPointValue": 50,
+      "_completionStatus": false
+    }
+  ],
+  "_currentLevelName": "Goal Observer"
+}

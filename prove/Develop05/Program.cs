@@ -1,15 +1,12 @@
 using System;
 using System.Security.Cryptography;
+using System.Text.Json; // modern JSON serializer
 
 class Program
 {
     static void Main(string[] args)
     {
-        Rewards rewardsObject = new Rewards();
-        List<KeyValuePair<string, int>> rewardList = rewardsObject.ReturnRewardList();
-
-        RewardSystem rs = new RewardSystem();
-        rs.LoadRewards(rewardList);
-        rs.DisplayRewardDict(rs.GetMoolahBalance(), rs.GetXPBalance(), rs.GetLevelName());
+        Menu menu = new Menu();
+        menu.RunMenuOption();
     }
 }

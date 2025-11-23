@@ -1,21 +1,21 @@
 public abstract class BaseGoal
 {
-    protected string _goalTitle;
-    protected string _goalDescription;
-    protected int _completionPointValue;
-    protected int _goalType;
-    protected bool _completionStatus;
+    public int _goalType { get; set; }
+    public string _goalTitle { get; set; }
+    public string _goalDescription { get; set; }
+    public int _completionPointValue { get; set; }
+    public bool _completionStatus { get; set; } 
 
-    // Write a function to set the goal type
     public BaseGoal()
     {
         _completionStatus = false; // default status is incomplete
     }
 
-    public void SetGoalType()
+    public void SetGoalType(int goalType)
     {
-        Console.Write("What Goal type would you like to create? ");
-        _goalType = int.Parse(Console.ReadLine());
+        // Console.Write("What Goal type would you like to create? ");
+        // _goalType = int.Parse(Console.ReadLine());
+        _goalType = goalType;
     }
 
     public abstract void DisplayGoal();
@@ -32,14 +32,17 @@ public abstract class BaseGoal
         _goalDescription = Console.ReadLine();
     }
 
-    public void SetCompletionPointValue()
+    public virtual void SetCompletionPointValue()
     {
         Console.Write("How many XP points do you want this goal to be worth upon completion? ");
         _completionPointValue = int.Parse(Console.ReadLine());
     }
 
     public abstract void MarkComplete();
-    public abstract void RecordPoints();
+    public virtual int RecordPoints()
+    {
+        return _completionPointValue;
+    }
 
     public string GetTitle()
     {

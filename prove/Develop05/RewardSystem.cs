@@ -6,12 +6,14 @@ public class RewardSystem
     private int _xpTotal;
     private int _moolah;
     private Dictionary<int, KeyValuePair<string, int>> _rewardDict;
-    private List<string> _levelNamesList;
+    private List<string> _levelNamesList = new List<string>();
     // private List<string> _purchasedItemsToUse;
     
 
     public RewardSystem()
     {
+        _moolah = 0;
+        _xpTotal = 0;
         _rewardDict = new Dictionary<int, KeyValuePair<string, int>>();
         _levelNamesList.AddRange(new List<string>{
             "Professional Procrastinator", 
@@ -50,9 +52,10 @@ public class RewardSystem
 
     public void DisplayRewardDict(int currentMoolah, int xpTotal, string levelName)
     {
+        Console.Clear();
         Console.WriteLine($"Current Level: {levelName}");
         Console.WriteLine($"Current XP: {xpTotal}");
-        Console.WriteLine($"Current Moolah: {currentMoolah}\n\n");
+        Console.WriteLine($"Current Moolah: {currentMoolah}¤\n\n");
 
         foreach (var rewardItem in _rewardDict)
         {
@@ -62,19 +65,31 @@ public class RewardSystem
 
     public void BuyReward()
     {
-        Console.WriteLine("Which reward would you like to buy?");
+        Console.Write("Which reward would you like to buy? ");
         int chosenReward = int.Parse(Console.ReadLine());
 
         if (_moolah >= _rewardDict[chosenReward].Value)
         {
             Console.WriteLine("Purchase Successful!");
             _moolah = _moolah - _rewardDict[chosenReward].Value;
+            Console.WriteLine($"You purchased the {_rewardDict[chosenReward].Key} item!");
         }
         else
         {
             Console.WriteLine("Insufficent funds!");
             Console.WriteLine($"You need {_rewardDict[chosenReward].Value - _moolah} more Moolah to purchase this item.");
+            Console.WriteLine("Please come back with more moolah!");
         }
+    }
+
+    public void SetMoolahBalance(int balance)
+    {
+        _moolah = balance;
+    }
+
+    public void SetXpBalance(int balance)
+    {
+        _xpTotal = balance;
     }
 
     public int GetMoolahBalance()
@@ -82,7 +97,7 @@ public class RewardSystem
         return _moolah;
     }
 
-    public int GetXPBalance()
+    public int GetXpBalance()
     {
         return _xpTotal;
     }
@@ -92,23 +107,40 @@ public class RewardSystem
         return _currentLevel;
     }
 
-    public void SetMoolahBalance(int quantity)
+    public void AddMoolahBalance(int quantity)
     {
         _moolah = _moolah + quantity;
     }
 
-    public void SetLevelName()
+    public void AddXpBalance(int quantity)
+    {
+        _xpTotal = _xpTotal + quantity;
+    }
+
+    public void CheckLevelName()
     {
         int levelListIndex;
 
-        if (_xpTotal > 0)
+        if (_xpTotal >= 100)
         {
-            levelListIndex = (_xpTotal/100) - 1;
+            levelListIndex = (_xpTotal / 100) - 1;
+
+            // Make sure we don't exceed the max level
+            if (levelListIndex >= _levelNamesList.Count)
+            {
+                levelListIndex = _levelNamesList.Count - 1;
+            }
         }
         else
         {
-            levelListIndex = 0;
+            levelListIndex = 0; // XP less than 100 = first level
         }
+
         _currentLevel = _levelNamesList[levelListIndex];
+    }
+
+    public void LoadCurrentLevelName(string name)
+    {
+        _currentLevel = name;
     }
 }
