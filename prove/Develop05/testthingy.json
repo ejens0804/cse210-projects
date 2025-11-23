@@ -1,6 +1,6 @@
 {
-  "_xp": 325,
-  "_moolah": 0,
+  "_xp": 394,
+  "_moolah": 10,
   "_goals": [
     {
       "$type": "SimpleGoal, Develop05",
@@ -29,6 +29,14 @@
       "_goalDescription": "Go running 5 times this week",
       "_completionPointValue": 50,
       "_completionStatus": false
+    },
+    {
+      "$type": "SimpleGoal, Develop05",
+      "_goalType": 1,
+      "_goalTitle": "Kiss Husband",
+      "_goalDescription": "Kiss Husband Passionately On Face",
+      "_completionPointValue": 69,
+      "_completionStatus": true
     }
   ],
   "_currentLevelName": "Goal Observer"

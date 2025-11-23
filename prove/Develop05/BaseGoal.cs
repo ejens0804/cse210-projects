@@ -13,8 +13,6 @@ public abstract class BaseGoal
 
     public void SetGoalType(int goalType)
     {
-        // Console.Write("What Goal type would you like to create? ");
-        // _goalType = int.Parse(Console.ReadLine());
         _goalType = goalType;
     }
 

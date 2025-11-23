@@ -8,7 +8,7 @@ public class RewardSystem
     private Dictionary<int, KeyValuePair<string, int>> _rewardDict;
     private List<string> _levelNamesList = new List<string>();
     // private List<string> _purchasedItemsToUse;
-    
+
 
     public RewardSystem()
     {
@@ -16,32 +16,32 @@ public class RewardSystem
         _xpTotal = 0;
         _rewardDict = new Dictionary<int, KeyValuePair<string, int>>();
         _levelNamesList.AddRange(new List<string>{
-            "Professional Procrastinator", 
-            "Master of 'I'll Start Tomorrow'", 
+            "Professional Procrastinator",
+            "Master of 'I'll Start Tomorrow'",
             "Goal Observer",
-            "Task Avoidance Specialist", 
-            "Half-Finished Project Enthusiast", 
+            "Task Avoidance Specialist",
+            "Half-Finished Project Enthusiast",
             "Checklist Admirer",
-            "Goal Attempt Initiator", 
+            "Goal Attempt Initiator",
             "Task Starter",
-            "Breaker of One Bad Habit (Maybe)", 
-            "To-Do List Wrangler", 
-            "Momentum Gainer", 
+            "Breaker of One Bad Habit (Maybe)",
+            "To-Do List Wrangler",
+            "Momentum Gainer",
             "Goal Finisher (Small Edition)",
-            "Habit Machine-in-Training", 
-            "Daily Goal Conqueror", 
+            "Habit Machine-in-Training",
+            "Daily Goal Conqueror",
             "Productivity Wizard",
-            "Master of Momentum", 
-            "Legendary Goal Slayer", 
-            "Unstoppable Task Titan", 
-            "Reality-Reshaping Productivity Overlord", 
+            "Master of Momentum",
+            "Legendary Goal Slayer",
+            "Unstoppable Task Titan",
+            "Reality-Reshaping Productivity Overlord",
             "The Final Achiever (Achieves ALL Goals)"
         });
     }
-    
-    public void LoadRewards(List<KeyValuePair<string,int>> rewardList)
+
+    public void LoadRewards(List<KeyValuePair<string, int>> rewardList)
     {
-        
+
         int key = 1;
         foreach (var reward in rewardList)
         {
@@ -142,5 +142,11 @@ public class RewardSystem
     public void LoadCurrentLevelName(string name)
     {
         _currentLevel = name;
+    }
+
+    public void ResetXpAndMoolah()
+    {
+        _xpTotal = 0;
+        _moolah = 0;
     }
 }

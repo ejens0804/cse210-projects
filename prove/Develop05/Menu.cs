@@ -1,8 +1,6 @@
 using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Security.Cryptography;
-// using System.Text.Json;
-// using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 // dotnet add package Newtonsoft.Json
 
@@ -215,6 +213,7 @@ public class Menu
                     if (confirm == "yes")
                     {
                         ResetProgram();
+                        rs.ResetXpAndMoolah();
                     }
                     break;
             }
@@ -241,9 +240,6 @@ public class Menu
 
     public void ResetProgram()
     {
-        // string exePath = Process.GetCurrentProcess().MainModule.FileName;
-        // Process.Start(exePath);
-        // Environment.Exit(0);
         _goalsBeingTracked.Clear();
         Console.WriteLine("Program reset! All unsaved data cleared.");
         Pause();
