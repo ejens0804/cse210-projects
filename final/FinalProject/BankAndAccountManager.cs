@@ -1,92 +1,95 @@
-public class BankAndAccountManager
+namespace FinalProject
 {
-    // Attributes/Member Variables
-    private List<Customer> _customerList = new List<Customer>();
-    private List<BaseAccount> _accountsList = new List<BaseAccount>();
-    private string _databaseHelperReference;
-    private string _nextAccountNumber;
-
-
-    // Constructor 
-    public BankAndAccountManager()
+    public class BankAndAccountManager
     {
-        
-    }
+        // Attributes/Member Variables
+        private List<Customer> _customerList = new List<Customer>();
+        private List<BaseAccount> _accountsList = new List<BaseAccount>();
+        private string _databaseHelperReference;
+        private string _nextAccountNumber;
 
 
-    // Methods
-    public void CreateCustomer()
-    {
-        
-    }
+        // Constructor 
+        public BankAndAccountManager()
+        {
 
-    public void GetCustomerByID()
-    {
-        
-    }
+        }
 
-    public void SearchCustomersByName()
-    {
-        
-    }
 
-    public int CreateAccount()
-    {
-        return 0;
-    }
+        // Methods
+        public void CreateCustomer()
+        {
 
-    public void GetAccountByID()
-    {
-        
-    }
+        }
 
-    public void GetAccountByAccountNumber()
-    {
-        
-    }
+        public void GetCustomerByID()
+        {
 
-    public void GetAllAccountsForCustomer()
-    {
-        
-    }
+        }
 
-    public void ProcessTransaction()
-    {
-        
-    }
+        public void SearchCustomersByName()
+        {
 
-    public void TransferBetweenAccounts()
-    {
-        
-    }
+        }
 
-    public void CloseAccount()
-    {
-        
-    }
+        public int CreateAccount()
+        {
+            return 0;
+        }
 
-    public void GenerateStatementForAccount()
-    {
-        
-    }
+        public void GetAccountByID()
+        {
 
-    public void ApplyInterestToAllAccounts()
-    {
-        
-    }
+        }
 
-    public void ChargeMonthlyFeesToAllAccounts()
-    {
-        
-    }
+        public void GetAccountByAccountNumber()
+        {
 
-    public decimal GetTotalSystemBalance()
-    {
-        return 0m;
-    }
+        }
 
-    public void FindAccountsBelowMinimumBalance()
-    {
-        
+        public void GetAllAccountsForCustomer()
+        {
+
+        }
+
+        public void ProcessTransaction()
+        {
+
+        }
+
+        public void TransferBetweenAccounts()
+        {
+
+        }
+
+        public void CloseAccount()
+        {
+
+        }
+
+        public void GenerateStatementForAccount()
+        {
+
+        }
+
+        public void ApplyInterestToAllAccounts()
+        {
+
+        }
+
+        public void ChargeMonthlyFeesToAllAccounts()
+        {
+
+        }
+
+        public decimal GetTotalSystemBalance()
+        {
+            return 0m;
+        }
+
+        public void FindAccountsBelowMinimumBalance()
+        {
+
+        }
     }
 }

@@ -1,42 +1,45 @@
-public class FeeManager
+namespace FinalProject
 {
-    // Attributes/Member Variables
-    private decimal _standardOverdraftFee;
-    private decimal _monthlyMaintenanceFee;
-    private decimal _transferFee;
-    private decimal _belowMinimumBalanceFee;
-
-
-    // Constructor
-    public FeeManager()
+    public class FeeManager
     {
-        
-    }
+        // Attributes/Member Variables
+        private decimal _standardOverdraftFee;
+        private decimal _monthlyMaintenanceFee;
+        private decimal _transferFee;
+        private decimal _belowMinimumBalanceFee;
 
 
-    // Methods
-    public void CalculateOverdraftFee()
-    {
-        
-    }
+        // Constructor
+        public FeeManager()
+        {
 
-    public void CalculateMaintenanceFee()
-    {
-        
-    }
+        }
 
-    public void CalculateTransferFee()
-    {
-        
-    }
 
-    public void ApplyFeeToAccount()
-    {
-        
-    }
+        // Methods
+        public void CalculateOverdraftFee()
+        {
 
-    public void CheckIfFeeShouldBeWaived()
-    {
-        
+        }
+
+        public void CalculateMaintenanceFee()
+        {
+
+        }
+
+        public void CalculateTransferFee()
+        {
+
+        }
+
+        public void ApplyFeeToAccount()
+        {
+
+        }
+
+        public void CheckIfFeeShouldBeWaived()
+        {
+
+        }
     }
 }

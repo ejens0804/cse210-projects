@@ -1,3 +1,7 @@
+-- Create the database
+CREATE DATABASE IF NOT EXISTS BankManagementSystem;
+USE BankManagementSystem;
+
 -- Create Customers table
 CREATE TABLE IF NOT EXISTS Customers (
     CustomerID INT PRIMARY KEY AUTO_INCREMENT,

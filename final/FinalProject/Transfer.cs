@@ -1,46 +1,49 @@
 using System.Runtime.InteropServices.Marshalling;
 
-public class Transfer : Transaction
+namespace FinalProject
 {
-    // Attributes/Member Variables
-    private int _fromAccountID;
-    private int _toAccountID;
-    private decimal _transferAmount;
-    private DateTime _transferDate;
-    private enum _transferStatus
+    public class Transfer : Transaction
     {
-        Pending,
-        Completed,
-        Failed
-    }
-    private decimal _transferFee;
+        // Attributes/Member Variables
+        private int _fromAccountID;
+        private int _toAccountID;
+        private decimal _transferAmount;
+        private DateTime _transferDate;
+        private enum _transferStatus
+        {
+            Pending,
+            Completed,
+            Failed
+        }
+        private decimal _transferFee;
 
 
-    // Constructor
-    public Transfer()
-    {
-        
-    }
+        // Constructor
+        public Transfer()
+        {
+
+        }
 
 
-    // Methods
-    public void ExecuteTransfer()
-    {
-        
-    }
+        // Methods
+        public void ExecuteTransfer()
+        {
 
-    public void ValidateTransfer()
-    {
-        
-    }
+        }
 
-    public void RollbackTransfer()
-    {
-        
-    }
+        public void ValidateTransfer()
+        {
 
-    public void GetTransferDetails()
-    {
-        
+        }
+
+        public void RollbackTransfer()
+        {
+
+        }
+
+        public void GetTransferDetails()
+        {
+
+        }
     }
 }

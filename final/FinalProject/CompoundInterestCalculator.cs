@@ -1,18 +1,11 @@
-public class CompoundInterestCalculator : InterestCalculator
+namespace FinalProject
 {
-    // Attributes/Member Variables
-    private enum _compoundingFrequency
+    public class CompoundInterestCalculator : InterestCalculator
     {
-        Daily,
-        Monthly,
-        Quarterly,
-        Annually
-    }
-
-
-    // Methods
-    public decimal CalculateInterest(decimal balance, decimal rate, DateTime timePeriod)
-    {
-        return 0m;
+        // Methods
+        public decimal CalculateInterest(decimal balance, decimal rate, DateTime timePeriod)
+        {
+            return 0m;
+        }
     }
 }

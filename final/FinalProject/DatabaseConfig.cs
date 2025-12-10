@@ -7,10 +7,10 @@ namespace FinalProject
     {
         // Attributes/Member Variables
         // Database Connection Details
-        private const string Host = "sql3.freesqldatabase.com";
-        private const string Database = "sql3810215";
-        private const string User = "sql3810215";
-        private const string Password = "nzt86243b3";
+        private const string Host = "localhost";
+        private const string Database = "BankManagementSystem";
+        private const string User = "root";
+        private const string Password = "eJ2011090804!"; // Replace with your actual password
         private const string Port = "3306";
 
 

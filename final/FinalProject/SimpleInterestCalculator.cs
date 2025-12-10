@@ -1,8 +1,11 @@
-public class SimpleInterestCalculator : InterestCalculator
+namespace FinalProject
 {
-    // Methods
-    public decimal CalculateInterest(decimal balance, decimal rate, DateTime timePeriod)
+    public class SimpleInterestCalculator : InterestCalculator
     {
-        return 0m;
+        // Methods
+        public decimal CalculateInterest(decimal balance, decimal rate, DateTime timePeriod)
+        {
+            return 0m;
+        }
     }
 }
