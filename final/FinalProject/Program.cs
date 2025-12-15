@@ -463,37 +463,218 @@ namespace FinalProject
 
         static void ViewTransactionHistory()
         {
+            Console.Clear();
+            Console.WriteLine("╔══════════════════════════════════════════════════════════════════╗");
+            Console.WriteLine("║                  TRANSACTION HISTORY                             ║");
+            Console.WriteLine("╚══════════════════════════════════════════════════════════════════╝\n");
 
+            int accountId = SelectAccount();
+            if (accountId == -1) return;
+
+            DatabaseRepositoryAndHelper db = new DatabaseRepositoryAndHelper();
+            List<Transaction> transactions = db.LoadTransactionsForAccount(accountId);
+
+            if (transactions.Count == 0)
+            {
+                Console.WriteLine("\nNo transactions found for this account.");
+            }
+            else
+            {
+                Console.WriteLine($"\n{"Date",-18} {"Type",-12} {"Amount",12} {"Balance",15} {"Description",-25}");
+                Console.WriteLine(new string('─', 85));
+
+                foreach (var trans in transactions)
+                {
+                    string sign = (trans.Type == TransactionType.Deposit || trans.Type == TransactionType.Interest) ? "+" : "-"; // The end part is like a compact if else statement to determine if the transaction is positive or negative
+                    Console.WriteLine($"{trans.TransactionDate:MM/dd/yyyy HH:mm,-18} {trans.Type,-12} {sign}${trans.Amount,10:N2} ${trans.BalanceAfter,13:N2} {trans.Description,-25}");
+                }
+            }
+
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadKey();
         }
 
         static void GenerateStatement()
         {
+            Console.Clear();
+            Console.WriteLine("╔══════════════════════════════════════════════════════════════════╗");
+            Console.WriteLine("║                  GENERATE STATEMENT                              ║");
+            Console.WriteLine("╚══════════════════════════════════════════════════════════════════╝\n");
 
+            int accountId = SelectAccount();
+            if (accountId == -1) return;
+
+            Console.Write("\nStart Date (MM/DD/YYYY): ");
+            if (!DateTime.TryParse(Console.ReadLine(), out DateTime startDate))
+            {
+                Console.WriteLine("✗ Invalid date format.");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+                return;
+            }
+
+            Console.Write("End Date (MM/DD/YYYY): ");
+            if (!DateTime.TryParse(Console.ReadLine(), out DateTime endDate))
+            {
+                Console.WriteLine("✗ Invalid date format.");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+                return;
+            }
+
+            if (!ValidationHelper.ValidateDateRange(startDate, endDate))
+            {
+                Console.WriteLine("✗ Invalid date range.");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+                return;
+            }
+
+            bankManager.GenerateStatementForAccount(accountId, startDate, endDate);
+
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadKey();
         }
 
         static void ViewAccountDetails()
         {
+            Console.Clear();
+            Console.WriteLine("╔══════════════════════════════════════════════════════════════════╗");
+            Console.WriteLine("║                    ACCOUNT DETAILS                               ║");
+            Console.WriteLine("╚══════════════════════════════════════════════════════════════════╝\n");
 
+            int accountId = SelectAccount();
+            if (accountId == -1) return;
+
+            BaseAccount account = bankManager.GetAccountByID(accountId);
+            if (account != null)
+            {
+                account.DisplayAccountInfo();
+            }
+
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadKey();
         }
 
         static void UpdateContactInfo()
         {
+            Console.Clear();
+            Console.WriteLine("╔══════════════════════════════════════════════════════════════════╗");
+            Console.WriteLine("║                UPDATE CONTACT INFORMATION                        ║");
+            Console.WriteLine("╚══════════════════════════════════════════════════════════════════╝\n");
 
+            Customer customer = bankManager.GetCustomerByID(currentCustomerId);
+            customer.DisplayCustomerDetails();
+
+            Console.WriteLine("\nEnter new information (press Enter to keep current):\n");
+
+            Console.Write($"Email [{customer.Email}]: ");
+            string email = Console.ReadLine();
+            if (string.IsNullOrEmpty(email))
+                email = customer.Email;
+
+            Console.Write($"Phone [{customer.PhoneNumber}]: ");
+            string phone = Console.ReadLine();
+            if (string.IsNullOrEmpty(phone))
+                phone = customer.PhoneNumber;
+
+            Console.Write($"Address [{customer.Address}]: ");
+            string address = Console.ReadLine();
+            if (string.IsNullOrEmpty(address))
+                address = customer.Address;
+
+            customer.UpdateContactInfo(email, phone, address);
+
+            DatabaseRepositoryAndHelper db = new DatabaseRepositoryAndHelper();
+            db.UpdateCustomer(customer);
+
+            Console.WriteLine("\n✓ Contact information updated successfully!");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
         }
 
         static void CloseAccount()
         {
+            Console.Clear();
+            Console.WriteLine("╔══════════════════════════════════════════════════════════════════╗");
+            Console.WriteLine("║                      CLOSE ACCOUNT                               ║");
+            Console.WriteLine("╚══════════════════════════════════════════════════════════════════╝\n");
 
+            int accountId = SelectAccount();
+            if (accountId == -1) return;
+
+            BaseAccount account = bankManager.GetAccountByID(accountId);
+
+            Console.WriteLine($"\nAccount: {account.AccountNumber}");
+            Console.WriteLine($"Balance: ${account.Balance:N2}");
+
+            if (account.Balance != 0)
+            {
+                Console.WriteLine("\n✗ Cannot close account with non-zero balance.");
+                Console.WriteLine("Please withdraw or transfer all funds first.");
+            }
+            else
+            {
+                Console.Write("\nAre you sure you want to close this account? (Y/N): ");
+                string confirm = Console.ReadLine();
+
+                if (confirm?.ToUpper() == "Y")
+                {
+                    try
+                    {
+                        bankManager.CloseAccount(accountId);
+                        Console.WriteLine("\n✓ Account closed successfully!");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"\n✗ Error closing account: {ex.Message}");
+                    }
+                }
+            }
+
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadKey();
         }
 
         static void Logout()
         {
-
+            currentCustomerId = -1;
+            Console.WriteLine("\n✓ Logged out successfully!");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
         }
 
         static int SelectAccount()
         {
-            return 0;
+            List<BaseAccount> accounts = bankManager.GetAllAccountsForCustomer(currentCustomerId);
+
+            if (accounts.Count == 0)
+            {
+                Console.WriteLine("You have no accounts. Please open an account first.");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+                return -1;
+            }
+
+            Console.WriteLine($"\n{"#",-4} {"Account ID",-12} {"Account #",-15} {"Type",-20} {"Balance",15}");
+            Console.WriteLine(new string('─', 70));
+
+            for (int i = 0; i < accounts.Count; i++)
+            {
+                var account = accounts[i];
+                Console.WriteLine($"{i + 1,-4} {account.AccountID,-12} {account.AccountNumber,-15} {account.GetType().Name,-20} ${account.Balance,12:N2}");
+            }
+
+            Console.Write("\nSelect account number (Account ID): ");
+            if (int.TryParse(Console.ReadLine(), out int selection) && selection > 0 && selection <= accounts.Count)
+            {
+                return accounts[selection - 1].AccountID;
+            }
+
+            Console.WriteLine("✗ Invalid selection.");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+            return -1;
         }
     }
 }
