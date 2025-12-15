@@ -76,10 +76,10 @@ namespace FinalProject
                 {
                     newAccount.AccountID = accountId;
                     _accountsList.Add(newAccount);
+                    return accountId;
                 }
-
-                return -1;
             }
+            return -1;
         }
 
         public BaseAccount GetAccountByID(int accountId)

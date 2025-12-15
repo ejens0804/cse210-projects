@@ -1,3 +1,5 @@
+using System;
+
 namespace FinalProject
 {
     public class SimpleInterestCalculator : InterestCalculator
@@ -5,7 +7,12 @@ namespace FinalProject
         // Methods
         public decimal CalculateInterest(decimal balance, decimal rate, DateTime timePeriod)
         {
-            return 0m;
+            int monthsElapsed = ((DateTime.Now.Year - timePeriod.Year) * 12) + (DateTime.Now.Month - timePeriod.Month);
+
+            if (monthsElapsed <= 0)
+                monthsElapsed = 1;
+
+            return balance * (rate / 100) * (monthsElapsed / 12m);
         }
     }
 }
