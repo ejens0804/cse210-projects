@@ -1,246 +1,202 @@
 # Bank Management System
 
-A C# console application demonstrating Object-Oriented Programming principles with a MySQL database backend for managing customers, accounts, and transactions.
+A complete banking application built with C# and MySQL that allows you to manage customer accounts, perform transactions, and track financial activity.
 
-## Features
+## What This Program Does
 
-- Customer management (create, update, view)
-- Multiple account types (Savings, Checking, Business)
-- Transaction processing (deposits, withdrawals, transfers)
-- Transaction history and statements
-- Interest calculation
-- Fee management
-- Overdraft protection
+- **Create and manage customer accounts** - Store customer information securely
+- **Multiple account types** - Savings, Checking, and Business accounts with unique features
+- **Banking transactions** - Deposits, withdrawals, and transfers between accounts
+- **Transaction history** - View complete records of all account activity
+- **Account statements** - Generate detailed statements for any date range
+- **Interest calculation** - Automatic interest on eligible accounts
+- **Fee management** - Overdraft protection and account maintenance fees
 
-## Prerequisites
+## Requirements
 
-Before running this project, you need to have the following installed:
+To run this program, you need:
 
-1. **Visual Studio 2022** (or Visual Studio Code with C# extension)
-2. **MySQL Server** (version 8.0 or later recommended)
-3. **MySQL Workbench** (for database management)
-4. **.NET 8.0 SDK**
+1. **Windows Operating System**
+2. **MySQL Workbench** - Download from: https://dev.mysql.com/downloads/workbench/
+3. **Visual Studio 2022 or Visual Studio Code** (Community Edition is free) - Download from: https://visualstudio.microsoft.com/ or https://code.visualstudio.com/download
 
-## Installation & Setup
+## Quick Start Guide
 
-### Step 1: Install MySQL Server and MySQL Workbench
+### Step 1: Install MySQL Workbench
 
-1. Download and install **MySQL Community Server** from: https://dev.mysql.com/downloads/mysql/
-   - During installation, remember your **root password** (you'll need this!)
-   - Default port is **3306**
-
-2. Download and install **MySQL Workbench** from: https://dev.mysql.com/downloads/workbench/
+1. Download **MySQL Installer** from https://dev.mysql.com/downloads/installer/
+2. Run the installer and choose "Custom" installation
+3. Select:
+   - MySQL Server (latest version)
+   - MySQL Workbench
+4. During setup, create a **root password** - **Remember this password!**
+5. Complete the installation
 
 ### Step 2: Create the Database
 
 1. Open **MySQL Workbench**
+2. Click on your local connection (usually "Local instance MySQL80")
+3. Enter your root password
+4. In the project folder, find the file `database_setup.sql`
+5. In MySQL Workbench, go to **File → Open SQL Script**
+6. Select `database_setup.sql` and click **Open**
+7. Click the lightning bolt icon ⚡ to run the script
+8. You should see "BankManagementSystem" appear in the SCHEMAS panel on the left
 
-2. Click on your local MySQL connection (usually listed as "Local instance MySQL80" or similar)
+### Step 3: Configure the Connection
 
-3. Enter your root password when prompted
+1. Open the project in **Visual Studio**
+2. Find and open `DatabaseConfig.cs`
+3. Update line 10 with YOUR password:
+   ```csharp
+   private const string Password = "YOUR_PASSWORD_HERE";
+   ```
+4. Save the file
 
-4. Once connected, click on the **SQL Editor** icon or go to **Query → New Query Tab**
+### Step 4: Run the Program
 
-5. Copy and paste the SQL script in the project called database_setup.sql
+1. Press **F5** or click the green "Start" button in Visual Studio
+(In Visual Studio code, verify that the .NET Framework is installed and navigate to the project directory, and type dotnet run in the terminal to execute the program)
+2. The program will test the database connection
+3. If successful, you'll see the main menu!
 
-6. Click the **lightning bolt icon** (⚡) or press **Ctrl+Shift+Enter** to execute the script
+## Using the Program
 
-7. You should see "Action Output" showing successful creation of the database and tables
+### First Time Setup
 
-8. Verify the database was created:
-   - In the left sidebar under "SCHEMAS", click the refresh icon
-   - You should see **BankManagementSystem** listed
-   - Expand it to see your three tables: Customers, Accounts, and Transactions
+1. **Create a Customer Account**
+   - Choose option 1 from the login screen
+   - Enter your personal information
+   - Remember your Customer ID!
 
-### Step 3: Configure the Project
+2. **Open a Bank Account**
+   - Login with your Customer ID
+   - Choose "Open New Account"
+   - Select account type and make initial deposit
 
-1. Open the project in Visual Studio
+### Available Account Types
 
-2. Open the file `DatabaseConfig.cs`
+**Savings Account**
+- 2.5% annual interest rate
+- $100 minimum balance
+- Limited to 6 withdrawals per month
+- Best for: Long-term savings
 
-3. Update the connection settings to match your MySQL installation:
+**Checking Account**
+- Overdraft protection available
+- $10 monthly maintenance fee (waived with $1000+ balance)
+- $25 minimum balance
+- Best for: Daily transactions
 
-```csharp
-private const string Host = "localhost";        // Your MySQL server address
-private const string Database = "BankManagementSystem";  // Database name
-private const string User = "root";             // Your MySQL username
-private const string Password = "YOUR_PASSWORD"; // Your MySQL password
-private const string Port = "3306";             // MySQL port (usually 3306)
-```
+**Business Account**
+- 1.5% annual interest rate
+- 100 free transactions per month
+- $0.50 fee per transaction after limit
+- $500 minimum balance
+- Best for: Business operations
 
-**Important:** Replace `"YOUR_PASSWORD"` with the actual root password you set during MySQL installation.
+### Main Features
 
-### Step 4: Install Required NuGet Package
+**Make Deposits/Withdrawals**
+- Select your account
+- Enter the amount
+- Transaction is recorded immediately
 
-The project requires the `MySqlConnector` package to communicate with MySQL.
+**Transfer Money**
+- Move money between your accounts instantly
+- Full transaction history maintained
 
-**Option A: Using Visual Studio**
-1. Right-click on the project in Solution Explorer
-2. Select **Manage NuGet Packages**
-3. Click the **Browse** tab
-4. Search for `MySqlConnector`
-5. Click **Install** on the MySqlConnector package
-6. Accept any license agreements
+**View Transaction History**
+- See all deposits, withdrawals, and transfers
+- Transactions shown with dates and descriptions
 
-**Option B: Using Package Manager Console**
-1. Go to **Tools → NuGet Package Manager → Package Manager Console**
-2. Type: `Install-Package MySqlConnector`
-3. Press Enter
+**Generate Statements**
+- Choose date range
+- View detailed summary of all activity
+- Shows opening/closing balance and totals
 
-**Option C: Already configured in .csproj**
-- The package reference should already be in `FinalProject.csproj`
-- Just right-click the project and select **Restore NuGet Packages**
-
-### Step 5: Build and Run
-
-1. Build the solution: **Build → Build Solution** (or press **Ctrl+Shift+B**)
-
-2. If there are no errors, run the program: **Debug → Start Debugging** (or press **F5**)
-
-3. The program will:
-   - Test the database connection
-   - Create a sample customer
-   - Create a sample checking account
-   - Perform sample transactions
-   - Display transaction history
+**Manage Your Profile**
+- Update email, phone, and address anytime
+- Information saved to database
 
 ## Troubleshooting
 
-### "Cannot connect to database" Error
+### "Cannot connect to database"
 
-**Check these things:**
+**Check these:**
+1. Is MySQL running?
+   - Open Windows Services (search "services" in Start menu)
+   - Look for "MySQL80" - should say "Running"
+   - If not, right-click and select "Start"
 
-1. **Is MySQL Server running?**
-   - Windows: Open Services (services.msc) and look for "MySQL80" or similar
-   - If stopped, right-click and select "Start"
-   - Or open MySQL Workbench and check if you can connect
+2. Is the password correct?
+   - Open `DatabaseConfig.cs`
+   - Make sure the password matches your MySQL root password
 
-2. **Is the password correct?**
-   - Make sure the password in `DatabaseConfig.cs` matches your MySQL root password
-   - Try connecting through MySQL Workbench first to verify your credentials
-
-3. **Is the database created?**
+3. Does the database exist?
    - Open MySQL Workbench
-   - Check if `BankManagementSystem` database exists under SCHEMAS
-   - If not, run the SQL script from Step 2 again
+   - Look for "BankManagementSystem" under SCHEMAS
+   - If missing, run `database_setup.sql` again
 
-4. **Is the port correct?**
-   - Default MySQL port is 3306
-   - Check your MySQL Workbench connection settings to confirm
+### Program won't start
 
-5. **Firewall blocking?**
-   - On Windows, MySQL might be blocked by firewall
-   - Add an exception for MySQL in Windows Firewall settings
+1. Make sure you have **.NET 8.0 SDK** installed
+2. Right-click project → "Restore NuGet Packages"
+3. Build the solution (Ctrl+Shift+B)
 
-### "Table doesn't exist" Error
+### "MySqlConnector not found" error
 
-- The database was created but tables weren't
-- Re-run the SQL script from Step 2 in MySQL Workbench
+1. Right-click the project in Visual Studio
+2. Select "Manage NuGet Packages"
+3. Search for "MySqlConnector"
+4. Click Install
 
-### Build Errors
+## Security Note
 
-**"MySqlConnector not found"**
-- Install the MySqlConnector NuGet package (see Step 4)
+This is an educational project. In a production environment:
+- Passwords should be encrypted
+- User authentication should be more robust
+- Database credentials should not be in source code
+- Add proper transaction logging and audit trails
 
-**"Type or namespace name could not be found"**
-- Make sure all your class files have `namespace FinalProject` wrapper
-- Check that you have all required files in the project
+## Database Design
 
-### Connection String Issues
+The system uses three main tables:
 
-If you changed your MySQL username or port, update `DatabaseConfig.cs`:
+**Customers** - Stores customer personal information
+**Accounts** - Stores all bank accounts (Savings, Checking, Business)
+**Transactions** - Records every financial transaction
 
-```csharp
-// Example for custom setup:
-private const string Host = "localhost";
-private const string Database = "BankManagementSystem";
-private const string User = "myusername";      // Your custom username
-private const string Password = "mypassword";   // Your custom password
-private const string Port = "3307";            // Custom port if changed
-```
+All data persists in MySQL, so your information is saved between program runs.
 
-## Project Structure
+## Features Demonstrated
 
-```
-FinalProject/
-├── Program.cs                        # Entry point, test code
-├── DatabaseConfig.cs                 # Database connection settings
-├── DatabaseRepositoryAndHelper.cs    # Database operations
-├── Enums.cs                         # Enum definitions
-│
-├── Customer.cs                      # Customer entity
-├── BaseAccount.cs                   # Abstract account base class
-├── CheckingAccount.cs               # Checking account implementation
-├── SavingsAccount.cs                # Savings account implementation
-├── BusinessAccount.cs               # Business account implementation
-│
-├── Transaction.cs                   # Transaction entity
-├── Transfer.cs                      # Transfer operations
-├── Statement.cs                     # Account statement generation
-│
-├── BankAndAccountManager.cs         # Main business logic coordinator
-├── FeeManager.cs                    # Fee calculation and management
-├── ValidationHelper.cs              # Input validation utilities
-│
-├── InterestCalculator.cs            # Interest calculator interface
-├── SimpleInterestCalculator.cs      # Simple interest implementation
-└── CompoundInterestCalculator.cs    # Compound interest implementation
-```
+This project showcases Object-Oriented Programming principles:
 
-## OOP Principles Demonstrated
-
-This project demonstrates all four main Object-Oriented Programming principles:
-
-1. **Encapsulation**: Private member variables with public properties
-2. **Inheritance**: Account types inherit from BaseAccount
-3. **Polymorphism**: Different account types override methods like `Withdraw()` and `CalculateInterest()`
-4. **Abstraction**: Abstract BaseAccount class and InterestCalculator interface
-
-## Database Schema
-
-### Customers Table
-- Stores customer personal information
-- Links to multiple accounts via CustomerID
-
-### Accounts Table
-- Stores account details for all account types
-- Foreign key to Customers table
-- Tracks balance, status, and account-specific settings
-
-### Transactions Table
-- Records all financial transactions
-- Foreign key to Accounts table
-- Supports linking related transactions (transfers)
-
-## Usage Examples
-
-After running the program, you can view the data in MySQL Workbench:
-
-```sql
--- View all customers
-SELECT * FROM Customers;
-
--- View all accounts
-SELECT * FROM Accounts;
-
--- View all transactions for an account
-SELECT * FROM Transactions WHERE AccountID = 1 ORDER BY TransactionDate DESC;
-
--- View customer with their accounts
-SELECT c.*, a.AccountNumber, a.AccountType, a.Balance
-FROM Customers c
-LEFT JOIN Accounts a ON c.CustomerID = a.CustomerID
-WHERE c.CustomerID = 1;
-```
+1. **Encapsulation** - Private data with controlled access
+2. **Inheritance** - Different account types share common functionality
+3. **Polymorphism** - Same operations work differently for different account types
+4. **Abstraction** - Interfaces and abstract classes define contracts
 
 ## Support
 
-If you continue to have issues:
-1. Verify MySQL Server is running
+If you encounter issues:
+
+1. Verify MySQL Server is running (Services → MySQL80)
 2. Test connection in MySQL Workbench first
-3. Check that your `DatabaseConfig.cs` credentials match your MySQL setup
-4. Ensure the database and tables were created successfully
+3. Check that `DatabaseConfig.cs` has correct password
+4. Ensure database and tables were created (check MySQL Workbench SCHEMAS)
+5. Check Visual Studio output window for specific error messages
 
-## License
+## Credits
 
-This is an educational project created for demonstrating C# and OOP concepts with MySQL database integration.
+This Bank Management System was created as an educational project to demonstrate:
+- C# programming
+- Object-Oriented Programming principles
+- MySQL database integration
+- User interface design
+- Transaction management
+
+---
+
+**Important**: This is a learning project. Do not use with real financial data or deploy in production environments without proper security enhancements.
