@@ -181,13 +181,24 @@ namespace FinalProject
             if (account != null)
             {
                 account.CloseAccount();
-                _databaseHelperReference.UpdateAccountBalance(accountId, account.Balance);
+                _databaseHelperReference.UpdateAccountStatus(accountId, AccountStatus.Closed);
             }
         }
 
         public void GenerateStatementForAccount(int accountId, DateTime startDate, DateTime endDate)
         {
-            // Set this up in the Statement class
+            BaseAccount account = GetAccountByID(accountId);
+            if (account == null)
+            {
+                Console.WriteLine("Account not found.");
+                return;
+            }
+
+            List<Transaction> transactions = _databaseHelperReference.LoadTransactionsByDateRange(accountId, startDate, endDate);
+
+            Statement statement = new Statement();
+            statement.GenerateStatement(account, transactions, startDate, endDate);
+            statement.DisplayStatement();
         }
 
         public void ApplyInterestToAllAccounts()

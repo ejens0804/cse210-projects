@@ -20,12 +20,12 @@ namespace FinalProject
         {
             var conn = new MySqlConnection(_connectionString);
             var cmd = new MySqlCommand(query, conn);
-            
+
             if (parameters != null)
             {
                 cmd.Parameters.AddRange(parameters);
             }
-            
+
             conn.Open();
             return cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection);
         }
@@ -102,7 +102,7 @@ namespace FinalProject
         public Customer LoadCustomerByID(int customerId)
         {
             string query = "SELECT * FROM Customers WHERE CustomerID = @customerId AND IsActive = TRUE";
-            
+
             MySqlParameter[] parameters = {
                 new MySqlParameter("@customerId", customerId)
             };
@@ -185,7 +185,7 @@ namespace FinalProject
         public BaseAccount LoadAccountByID(int accountId)
         {
             string query = "SELECT * FROM Accounts WHERE AccountID = @accountId";
-            
+
             MySqlParameter[] parameters = {
                 new MySqlParameter("@accountId", accountId)
             };
@@ -286,7 +286,7 @@ namespace FinalProject
                 new MySqlParameter("@date", transaction.TransactionDate),
                 new MySqlParameter("@description", transaction.Description ?? ""),
                 new MySqlParameter("@balanceAfter", transaction.BalanceAfter),
-                new MySqlParameter("@relatedId", transaction.RelatedTransactionID.HasValue ? 
+                new MySqlParameter("@relatedId", transaction.RelatedTransactionID.HasValue ?
                     (object)transaction.RelatedTransactionID.Value : DBNull.Value)
             };
 
@@ -320,7 +320,7 @@ namespace FinalProject
                             TransactionDate = reader.GetDateTime("TransactionDate"),
                             Description = reader.GetString("Description"),
                             BalanceAfter = reader.GetDecimal("BalanceAfter"),
-                            RelatedTransactionID = reader.IsDBNull(reader.GetOrdinal("RelatedTransactionID")) 
+                            RelatedTransactionID = reader.IsDBNull(reader.GetOrdinal("RelatedTransactionID"))
                                 ? null : reader.GetInt32("RelatedTransactionID")
                         });
                     }
@@ -381,6 +381,19 @@ namespace FinalProject
 
             MySqlParameter[] parameters = {
                 new MySqlParameter("@balance", newBalance),
+                new MySqlParameter("@accountId", accountId)
+            };
+
+            ExecuteNonQuery(query, parameters);
+        }
+
+        public void UpdateAccountStatus(int accountId, AccountStatus newStatus)
+        {
+            string query = "UPDATE Accounts SET AccountStatus = @status WHERE AccountID = @accountId";
+
+            MySqlParameter[] parameters =
+            {
+                new MySqlParameter("@status", newStatus.ToString()),
                 new MySqlParameter("@accountId", accountId)
             };
 

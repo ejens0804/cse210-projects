@@ -323,7 +323,7 @@ namespace FinalProject
 
                 foreach (var account in accounts)
                 {
-                    Console.WriteLine($"{account.AccountID,-12} {account.AccountNumber,-15} {account.GetType().Name,-20} {account.Balance,12:N2} {account.Status,-10}");
+                    Console.WriteLine($"{account.AccountID,-12} {account.AccountNumber,-15} {account.GetType().Name,-20} ${account.Balance,12:N2} {account.Status,-10}");
                 }
             }
 
@@ -344,6 +344,22 @@ namespace FinalProject
             Console.Write("\nDeposit Amount: $");
             if (decimal.TryParse(Console.ReadLine(), out decimal amount))
             {
+                if (amount <= 0)
+                {
+                    Console.WriteLine("\n✗ Deposit amount must be positive.");
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey();
+                    return;
+                }
+
+                if (amount > 1000000)
+                {
+                    Console.WriteLine("\n✗ Deposit amount exceeds maximum limit of $1,000,000.");
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey();
+                    return;
+                }
+
                 Console.Write("Description (optional): ");
                 string description = Console.ReadLine();
                 if (string.IsNullOrEmpty(description))
