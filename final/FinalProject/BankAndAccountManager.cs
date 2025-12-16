@@ -13,7 +13,17 @@ namespace FinalProject
         public BankAndAccountManager()
         {
             _databaseHelperReference = new DatabaseRepositoryAndHelper();
-            _nextAccountNumber = 10000000;
+
+            int maxAccountNumber = _databaseHelperReference.GetMaxAccountNumber();
+
+            if (maxAccountNumber > 0)
+            {
+                _nextAccountNumber = maxAccountNumber + 1;
+            }
+            else
+            {
+                _nextAccountNumber = 10000000;
+            }
         }
 
 

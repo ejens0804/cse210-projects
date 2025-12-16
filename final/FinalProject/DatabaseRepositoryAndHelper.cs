@@ -414,5 +414,26 @@ namespace FinalProject
         {
             transaction.Rollback();
         }
+
+        public int GetMaxAccountNumber()
+        {
+            string query = "SELECT MAX(CAST(AccountNumber AS UNSIGNED)) FROM Accounts";
+
+            try
+            {
+                object result = ExecuteScalar(query);
+
+                if (result != null && result != DBNull.Value)
+                {
+                    return Convert.ToInt32(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error getting max account number: {ex.Message}");
+            }
+
+            return 0;
+        }
     }
 }

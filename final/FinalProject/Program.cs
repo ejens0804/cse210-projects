@@ -10,9 +10,12 @@ namespace FinalProject
 
         static void Main(string[] args)
         {
+            Console.Clear();
             Console.WriteLine("╔══════════════════════════════════════════════════════════════════╗");
             Console.WriteLine("║           WELCOME TO BANK MANAGEMENT SYSTEM                      ║");
             Console.WriteLine("╚══════════════════════════════════════════════════════════════════╝\n");
+            // Console.WriteLine("Press any key to continue...");
+            // Console.ReadKey();
 
             Console.WriteLine("Testing database connection...");
             if (!DatabaseConfig.TestConnection())
@@ -27,7 +30,9 @@ namespace FinalProject
                 return;
             }
 
-            Console.WriteLine("\n✓ Database connection successful!\n");
+            Console.WriteLine("\n✓ Database connection successful!");
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadKey();
             bankManager = new BankAndAccountManager();
 
 
@@ -44,7 +49,7 @@ namespace FinalProject
                 }
             }
 
-            Console.WriteLine("\nThank you for usign the Bank Management System!");
+            Console.WriteLine("\nThank you for using the Bank Management System!");
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
         }
@@ -291,7 +296,7 @@ namespace FinalProject
                 }
                 else
                 {
-                    Console.WriteLine("/n✗ Failed to create account.");
+                    Console.WriteLine("\n✗ Failed to create account.");
                 }
             }
             else
@@ -502,7 +507,7 @@ namespace FinalProject
                 foreach (var trans in transactions)
                 {
                     string sign = (trans.Type == TransactionType.Deposit || trans.Type == TransactionType.Interest) ? "+" : "-"; // The end part is like a compact if else statement to determine if the transaction is positive or negative
-                    Console.WriteLine($"{trans.TransactionDate:MM/dd/yyyy HH:mm,-18} {trans.Type,-12} {sign}${trans.Amount,10:N2} ${trans.BalanceAfter,13:N2} {trans.Description,-25}");
+                    Console.WriteLine($"{trans.TransactionDate:MM/dd/yyyy HH:mm} {trans.Type,-12} {sign}${trans.Amount,10:N2} ${trans.BalanceAfter,13:N2} {trans.Description,-25}");
                 }
             }
 
@@ -681,7 +686,7 @@ namespace FinalProject
                 Console.WriteLine($"{i + 1,-4} {account.AccountID,-12} {account.AccountNumber,-15} {account.GetType().Name,-20} ${account.Balance,12:N2}");
             }
 
-            Console.Write("\nSelect account number (Account ID): ");
+            Console.Write("\nSelect account number (# on the left): ");
             if (int.TryParse(Console.ReadLine(), out int selection) && selection > 0 && selection <= accounts.Count)
             {
                 return accounts[selection - 1].AccountID;

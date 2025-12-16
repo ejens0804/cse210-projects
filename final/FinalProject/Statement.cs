@@ -128,7 +128,7 @@ namespace FinalProject
     
         public void ExportToFile()
         {
-            Console.WriteLine("Export to file featur not yet implemented.");
+            Console.WriteLine("Export to file feature not yet implemented.");
         }
     
         public List<Transaction> FilterTransactionsByType(TransactionType type)
