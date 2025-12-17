@@ -90,9 +90,9 @@ To run this program, you need:
 1. In VS Code Explorer, find and click on `DatabaseConfig.cs`
 2. Find line 14 that says:
    ```csharp
-   private const string Password = "eJ2011090804!";
+   private const string Password = "USER_PASSWORD";
    ```
-3. Replace `"eJ2011090804!"` with **your MySQL root password**
+3. Replace `"USER_PASSWORD"` with **your MySQL root password**
 4. Save the file (`Ctrl+S` or `Cmd+S` on Mac)
 
 ### Step 6: Install NuGet Package

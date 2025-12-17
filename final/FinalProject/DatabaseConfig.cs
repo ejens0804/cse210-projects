@@ -10,12 +10,12 @@ namespace FinalProject
         private const string Host = "localhost";
         private const string Database = "BankManagementSystem";
         private const string User = "root";
-        private const string Password = "eJ2011090804!"; // Replace with your actual password
+        private const string Password = "USER_PASSWORD"; // Replace with your actual password
         private const string Port = "3306";
 
 
         // Build the connection string
-        public static string ConnectionString => 
+        public static string ConnectionString =>
             $"Server={Host};Port={Port};Database={Database};User ID={User};Password={Password};";
 
 
