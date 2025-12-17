@@ -30,7 +30,6 @@ namespace FinalProject
                 return;
             }
 
-            Console.WriteLine("\n✓ Database connection successful!");
             Console.WriteLine("\nPress any key to continue...");
             Console.ReadKey();
             bankManager = new BankAndAccountManager();
@@ -515,7 +514,7 @@ namespace FinalProject
                     {
                         sign = (trans.Type == TransactionType.Deposit || trans.Type == TransactionType.Interest) ? "+" : "-"; // The end part is like a compact if else statement to determine if the transaction is positive or negative
                     }
-                    
+
                     Console.WriteLine($"{trans.TransactionDate:MM/dd/yyyy HH:mm} {trans.Type,-12} {sign}${trans.Amount,10:N2} ${trans.BalanceAfter,13:N2} {trans.Description,-30}");
                 }
             }

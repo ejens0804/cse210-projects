@@ -48,6 +48,10 @@ namespace FinalProject
                 {
                     _openingBalance -= trans.Amount;
                 }
+                else if (trans.Type == TransactionType.Transfer && trans.Description.Contains("from"))
+                {
+                    _openingBalance -= trans.Amount;
+                }
                 else
                 {
                     _openingBalance += trans.Amount;
