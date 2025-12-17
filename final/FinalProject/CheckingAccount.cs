@@ -40,9 +40,9 @@ namespace FinalProject
         // Constructor
         public CheckingAccount()
         {
-            _overdraftLimit = 0m;
+            _overdraftLimit = 50.00m;
             _overdraftFee = 35.00m;
-            _hasOverdraftProtection = false;
+            _hasOverdraftProtection = true;
             _monthlyMaintenanceFee = 10.00m;
             _interestRate = 0.1m;
             _minimumBalance = 25.00m;

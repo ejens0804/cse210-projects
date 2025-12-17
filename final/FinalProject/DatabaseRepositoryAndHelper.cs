@@ -337,6 +337,9 @@ namespace FinalProject
         public List<Transaction> LoadTransactionsByDateRange(int accountId, DateTime startDate, DateTime endDate)
         {
             List<Transaction> transactions = new List<Transaction>();
+
+            DateTime endDateInclusive = endDate.Date.AddDays(1).AddSeconds(-1);
+
             string query = @"SELECT * FROM Transactions 
                            WHERE AccountID = @accountId 
                            AND TransactionDate BETWEEN @startDate AND @endDate
@@ -344,8 +347,8 @@ namespace FinalProject
 
             MySqlParameter[] parameters = {
                 new MySqlParameter("@accountId", accountId),
-                new MySqlParameter("@startDate", startDate),
-                new MySqlParameter("@endDate", endDate)
+                new MySqlParameter("@startDate", startDate.Date),
+                new MySqlParameter("@endDate", endDateInclusive)
             };
 
             try

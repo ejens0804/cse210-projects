@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using  System.Linq;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace FinalProject
@@ -20,15 +20,15 @@ namespace FinalProject
         private decimal _totalWithdrawals;
         private decimal _totalFees;
         private decimal _interestEarned;
-    
-    
+
+
         // Constructor
         public Statement()
         {
-            
+
         }
-    
-    
+
+
         // Methods
         public void GenerateStatement(BaseAccount account, List<Transaction> transactions, DateTime startDate, DateTime endDate)
         {
@@ -55,7 +55,7 @@ namespace FinalProject
             }
             CalculateSummaryTotals();
         }
-    
+
         public void CalculateSummaryTotals()
         {
             _totalDeposits = 0m;
@@ -83,7 +83,7 @@ namespace FinalProject
                 }
             }
         }
-    
+
         public void DisplayStatement()
         {
             Console.WriteLine("\n╔═══════════════════════════════════════════════════════════════════╗");
@@ -93,7 +93,7 @@ namespace FinalProject
             Console.WriteLine($"Account Type: {_accountType}");
             Console.WriteLine($"Statement Period: {_statementPeriodStartDate:MM/dd/yyyy} - {_statementPeriodEndDate:MM/dd/yyyy}");
             Console.WriteLine($"\nOpening Balance: ${_openingBalance:N2}");
-            
+
             Console.WriteLine("\n─────────────────────────────────────────────────────────────────────");
             Console.WriteLine("                         TRANSACTIONS");
             Console.WriteLine("─────────────────────────────────────────────────────────────────────");
@@ -104,12 +104,21 @@ namespace FinalProject
             }
             else
             {
-                Console.WriteLine($"{"Date",-12} {"Type",-12} {"Amount",12} {"Balance",15} {"Description",-20}");
-                Console.WriteLine(new string('─', 75));
+                Console.WriteLine($"{"Date",-12} {"Type",-12} {"Amount",12} {"Balance",15} {"Description",-25}");
+                Console.WriteLine(new string('─', 80));
 
                 foreach (var transaction in _transactionList.OrderBy(t => t.TransactionDate))
                 {
-                    string sign = (transaction.Type == TransactionType.Deposit || transaction.Type == TransactionType.Interest) ? "+" : "-";
+                    string sign;
+                    if (transaction.Type == TransactionType.Transfer)
+                    {
+                        sign = transaction.Description.Contains("from") ? "+" : "-";
+                    }
+                    else
+                    {
+                        sign = (transaction.Type == TransactionType.Deposit || transaction.Type == TransactionType.Interest) ? "+" : "-";
+                    }
+
                     Console.WriteLine($"{transaction.TransactionDate:MM/dd/yyyy,-12} {transaction.Type,-12} {sign}${transaction.Amount,10:N2} ${transaction.BalanceAfter,13:N2} {transaction.Description,-20}");
                 }
             }
@@ -123,19 +132,18 @@ namespace FinalProject
             Console.WriteLine($"Interest Earned:       ${_interestEarned,10:N2}");
             Console.WriteLine($"\nClosing Balance:       ${_closingBalance,10:N2}");
             Console.WriteLine("═════════════════════════════════════════════════════════════════════\n");
-
         }
-    
+
         public void ExportToFile()
         {
             Console.WriteLine("Export to file feature not yet implemented.");
         }
-    
+
         public List<Transaction> FilterTransactionsByType(TransactionType type)
         {
             return _transactionList.Where(t => t.Type == type).ToList();
         }
-    
+
         public List<Transaction> GetTransactionsForPeriod()
         {
             return _transactionList;

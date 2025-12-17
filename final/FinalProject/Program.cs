@@ -502,12 +502,21 @@ namespace FinalProject
             else
             {
                 Console.WriteLine($"\n{"Date",-18} {"Type",-12} {"Amount",12} {"Balance",15} {"Description",-25}");
-                Console.WriteLine(new string('─', 85));
+                Console.WriteLine(new string('─', 90));
 
                 foreach (var trans in transactions)
                 {
-                    string sign = (trans.Type == TransactionType.Deposit || trans.Type == TransactionType.Interest) ? "+" : "-"; // The end part is like a compact if else statement to determine if the transaction is positive or negative
-                    Console.WriteLine($"{trans.TransactionDate:MM/dd/yyyy HH:mm} {trans.Type,-12} {sign}${trans.Amount,10:N2} ${trans.BalanceAfter,13:N2} {trans.Description,-25}");
+                    string sign;
+                    if (trans.Type == TransactionType.Transfer)
+                    {
+                        sign = trans.Description.Contains("from") ? "+" : "-";
+                    }
+                    else
+                    {
+                        sign = (trans.Type == TransactionType.Deposit || trans.Type == TransactionType.Interest) ? "+" : "-"; // The end part is like a compact if else statement to determine if the transaction is positive or negative
+                    }
+                    
+                    Console.WriteLine($"{trans.TransactionDate:MM/dd/yyyy HH:mm} {trans.Type,-12} {sign}${trans.Amount,10:N2} ${trans.BalanceAfter,13:N2} {trans.Description,-30}");
                 }
             }
 
@@ -525,33 +534,67 @@ namespace FinalProject
             int accountId = SelectAccount();
             if (accountId == -1) return;
 
-            Console.Write("\nStart Date (MM/DD/YYYY): ");
-            if (!DateTime.TryParse(Console.ReadLine(), out DateTime startDate))
-            {
-                Console.WriteLine("✗ Invalid date format.");
-                Console.WriteLine("Press any key to continue...");
-                Console.ReadKey();
-                return;
-            }
+            Console.WriteLine("\nStatement Options:");
+            Console.WriteLine("1. ALL Transactions (Complete History)");
+            Console.WriteLine("2. Transactions by Date Range");
+            Console.Write("\nSelect option (1-2): ");
 
-            Console.Write("End Date (MM/DD/YYYY): ");
-            if (!DateTime.TryParse(Console.ReadLine(), out DateTime endDate))
-            {
-                Console.WriteLine("✗ Invalid date format.");
-                Console.WriteLine("Press any key to continue...");
-                Console.ReadKey();
-                return;
-            }
+            string choice = Console.ReadLine();
 
-            if (!ValidationHelper.ValidateDateRange(startDate, endDate))
+            if (choice == "1") // ALL Transactions
             {
-                Console.WriteLine("✗ Invalid date range.");
-                Console.WriteLine("Press any key to continue...");
-                Console.ReadKey();
-                return;
-            }
+                DatabaseRepositoryAndHelper db = new DatabaseRepositoryAndHelper();
+                List<Transaction> allTransactions = db.LoadTransactionsForAccount(accountId);
+                BaseAccount account = bankManager.GetAccountByID(accountId);
 
-            bankManager.GenerateStatementForAccount(accountId, startDate, endDate);
+                if (allTransactions.Count == 0)
+                {
+                    Console.WriteLine("\nNo transactions found for this account.");
+                }
+                else
+                {
+                    DateTime firstDate = allTransactions[allTransactions.Count - 1].TransactionDate;
+                    DateTime lastDate = allTransactions[0].TransactionDate;
+
+                    Statement statement = new Statement();
+                    statement.GenerateStatement(account, allTransactions, firstDate, lastDate);
+                    statement.DisplayStatement();
+                }
+            }
+            else if (choice == "2")
+            {
+                Console.Write("\nStart Date (MM/DD/YYYY): ");
+                if (!DateTime.TryParse(Console.ReadLine(), out DateTime startDate))
+                {
+                    Console.WriteLine("✗ Invalid date format.");
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey();
+                    return;
+                }
+
+                Console.Write("End Date (MM/DD/YYYY): ");
+                if (!DateTime.TryParse(Console.ReadLine(), out DateTime endDate))
+                {
+                    Console.WriteLine("✗ Invalid date format.");
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey();
+                    return;
+                }
+
+                if (!ValidationHelper.ValidateDateRange(startDate, endDate))
+                {
+                    Console.WriteLine("✗ Invalid date range.");
+                    Console.WriteLine("Press any key to continue...");
+                    Console.ReadKey();
+                    return;
+                }
+
+                bankManager.GenerateStatementForAccount(accountId, startDate, endDate);
+            }
+            else
+            {
+                Console.WriteLine("\n✗ Invalid option.");
+            }
 
             Console.WriteLine("\nPress any key to continue...");
             Console.ReadKey();

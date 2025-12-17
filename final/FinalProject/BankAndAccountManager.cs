@@ -174,6 +174,28 @@ namespace FinalProject
                 fromAccount.Withdraw(amount);
                 toAccount.Deposit(amount);
 
+                // Transaction for FROM account (withdrawal account)
+                Transaction fromTransaction = new Transaction();
+                fromTransaction.AccountID = fromAccountId;
+                fromTransaction.Type = TransactionType.Transfer;
+                fromTransaction.Amount = amount;
+                fromTransaction.Description = $"Transfer to Account {toAccount.AccountNumber}";
+                fromTransaction.BalanceAfter = fromAccount.Balance;
+
+                int fromTransId = _databaseHelperReference.SaveTransaction(fromTransaction);
+
+                // Transaction for To account (deposit account)
+                Transaction toTransaction = new Transaction();
+                toTransaction.AccountID = toAccountId;
+                toTransaction.Type = TransactionType.Transfer;
+                toTransaction.Amount = amount;
+                toTransaction.Description = $"Transfer from Account {fromAccount.AccountNumber}";
+                toTransaction.BalanceAfter = toAccount.Balance;
+                toTransaction.RelatedTransactionID = fromTransId;
+
+                _databaseHelperReference.SaveTransaction(toTransaction);
+
+                // Update balances
                 _databaseHelperReference.UpdateAccountBalance(fromAccountId, fromAccount.Balance);
                 _databaseHelperReference.UpdateAccountBalance(toAccountId, toAccount.Balance);
 
